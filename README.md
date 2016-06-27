@@ -49,9 +49,40 @@ Used mostly with actions.
 After cloning the repository, `demo.html` should contain a runnable
 example.
 
-### Embedding an animation
+## Embedding an animation
 
 See `demo.html` for a minimal example. To define animations, using a transpiler is a suggested way of generating the required operation sequence. An example is in `animations.js` and `/python/transpiler.py` contains a Python transpiler.
+
+### Options
+
+The operation sequence also contains some options related to the layout. Default values for the options are the following:
+
+```javascript
+{ 'code': 'top',
+  'console': true,
+  'controls': true,
+  'stackHeight': 100,
+  'rightPanelsWidth': 150,
+  'heapHeight': 80,
+  'width': 850,
+  'codeWidth': 'auto',
+  'classesLeft': false,
+  'consoleBelowHeap': false,
+  'consoleLeft': false
+}
+```
+
+#### `code`
+
+Defines the position of the code area. Can be `top`, `left`, `none`, `top-left` or `aboveHeapAndPanels`.
+
+#### `stackHeight`
+
+The height of each stack frame is about from 100 to 120 pixels. Calculate the maximum number of stack frames at the same time and adjust the value accordingly.
+
+#### `codeWidth`
+
+Can be `auto` or the width of the code area in pixels.
 
 ## Built-in operations
 
