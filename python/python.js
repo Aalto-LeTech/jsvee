@@ -217,6 +217,36 @@
         ready(newElement);
       }
 
+    } else if (element.hasClass('jsvee-function') && element.attr('data-name') === 'range') {
+
+      
+      var param1 = +element.find('.jsvee-value').eq(0).text();
+      var param2 = +element.find('.jsvee-value').eq(1).text();
+
+      var start = 0;
+      var end = param1;
+
+      if (param2) {
+        start = param1;
+        end = param2;
+      }      
+      
+      var i;
+      var elements = [];
+      for (i = start; i < end; i++) {
+        elements.push(JSVEE.utils.ui.findOrCreateValue(area, i, 'int'));
+      }
+      
+      var newElement = JSVEE.utils.ui.createInstance(area, 'range');
+      
+      elements.forEach(function(value) {
+        value.appendTo(newElement).hide();
+      });
+      
+      newElement.appendTo(area.find('.jsvee-heap'));
+      var ref = JSVEE.utils.ui.createReference(area, newElement.attr('data-id'));
+      ready(ref);
+
     } else if (element.hasClass('jsvee-function') && element.attr('data-name') === 'append' && element.attr('data-class') === 'list') {
 
       var params = element.find('.jsvee-value');
