@@ -288,7 +288,18 @@
     } else if (element.hasClass('jsvee-function') && element.attr('data-name') === 'abs') {
 
       var param1 = element.find('.jsvee-value').eq(0).text();
-      var newElement = JSVEE.utils.ui.findOrCreateValue(area, Math.abs(parseInt(param1, 10)), 'int');
+      var newElement;
+
+      if (element.find('.jsvee-value').eq(0).attr('data-type') === 'float') {
+        result = Math.abs(parseFloat(param1, 10));
+        if (result.toString().indexOf(".") < 0) {
+          result = result.toFixed("1");
+        }
+        newElement = JSVEE.utils.ui.findOrCreateValue(area, result, 'float');
+      } else {
+        newElement = JSVEE.utils.ui.findOrCreateValue(area, Math.abs(parseInt(param1, 10)), 'int');
+      }
+
       ready(newElement);
 
     } else if (element.hasClass('jsvee-function') && element.attr('data-name') === 'max') {
