@@ -512,7 +512,7 @@ def handleSubscript(node, line, result):
     pos = result.getPosition()
     traverseCode(node.value, line, result)
 
-    result.steps.append(['addOperator', '[]', result.getPosition()])
+    result.steps.append(['addOperator', '[ ]', result.getPosition()])
     result.addInitStep(['createOperator', '[ ]', 'pr', '', ' [ # ]'])
     result.moveLeft()
     result.moveDown()
