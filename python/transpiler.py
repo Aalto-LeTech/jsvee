@@ -74,6 +74,7 @@ class ParseResult:
 
 # *********************************************************************************************************************
 
+
 def handleAssign(node, line, result):
     result.checkLine(line)
 
@@ -90,7 +91,7 @@ def handleAssign(node, line, result):
         assert len(target.slice._fields) == 1 and 'value' in target.slice._fields
         pos = result.getPosition()
         traverseCode(target.value, line, result)
-        result.steps.append(['addOperator', '[]=', result.getPosition()])
+        result.steps.append(['addOperator', '[ ] =', result.getPosition()])
         result.addInitStep(['createOperator', '[ ] =', 'pr', '', '[ # ] = #'])
         result.moveLeft()
         result.moveDown()
@@ -103,19 +104,20 @@ def handleAssign(node, line, result):
         result.resetPosition()
     elif name == 'Attribute':
         traverseCode(node.value, line, result)
-        assert node.targets[0].value.__class__.__name__ == 'Name'        
+        assert node.targets[0].value.__class__.__name__ == 'Name'
         result.steps.append(['assignField', node.targets[0].attr, '@' + node.targets[0].value.id])
         result.resetPosition()
     else:
         assert False
 
+
 def handleAugAssign(node, line, result):
     assert node.target.__class__.__name__ == 'Name'
-    
+
     result.checkLine(line)
     result.steps.append(['addValueFromVariable', node.target.id, result.getPosition()])
     result.moveRight()
-    
+
     ops = {'Mult': '*', 'Add': '+', 'Sub': '-', 'Div': '/', 'Pow': '**'}
     name = node.op.__class__.__name__
     position = result.getPosition()
@@ -128,20 +130,20 @@ def handleAugAssign(node, line, result):
         sys.stderr.write('Warning: Unknown operator {}.\n'.format(name))
 
     traverseCode(node.value, line, result)
-    result.steps.append(['evaluateOperator', position])    
-    result.steps.append(['assign', node.target.id])  
+    result.steps.append(['evaluateOperator', position])
+    result.steps.append(['assign', node.target.id])
     result.resetPosition()
-    
+
 
 def handleAttribute(node, line, result):
-    
-    #TODO: attribute chains
+
+    # TODO: attribute chains
     type = name = node.value.__class__.__name__
     assert type == 'Name'
-    
+
     result.steps.append(['addValueFromField', node.attr, '@' + node.value.id, result.getPosition()])
     result.moveRight()
-    
+
 def handleBinOp(node, line, result):
     ops = {'Mult': '*', 'Add': '+', 'Sub': '-', 'Div': '/', 'Pow': '**'}
     name = node.op.__class__.__name__
@@ -195,20 +197,20 @@ def handleBreak(node, line, result):
 def handleCall(node, line, result):
     result.checkLine(line)
     position = result.getPosition()
-    
+
     name = node.func.__class__.__name__
-    
+
     if name == 'Name':
-        
+
         # Creating class instance or call function?
-        if node.func.id not in result.classes:        
+        if node.func.id not in result.classes:
             if node.func.id not in result.functions:
                 params = 'abcdefghijklmnopq'[0:len(node.args)]
                 if node.func.id != 'print':
                     result.addInitStep(['createFunction', node.func.id, node.func.id + '(' + ', '.join(params) + ')', len(node.args), '-1'])
                 else:
                     result.addInitStep(['createFunction', node.func.id, node.func.id + '(a, ...)', -1, '-1'])
-            
+
             result.steps.append(['addFunction', node.func.id, position, len(node.args)])
             result.moveDown()
             for n in node.args:
@@ -220,19 +222,19 @@ def handleCall(node, line, result):
             result.steps.append(['evaluateFunction', position])
         else:
             result.steps.append(['createInstance', node.func.id])
-            result.steps.append(['addReference', '-1', position])            
+            result.steps.append(['addReference', '-1', position])
             if node.func.id in result.classesWithInit:
                 result.steps.append(['addFunction', '__init__', position, len(node.args), '?'])
                 result.moveDown()
                 result.moveParentRight()
-            for n in node.args:
-                traverseCode(n, line, result)
-                result.moveLeft()
-                result.moveParentRight()
-            result.moveUp()
-            result.moveRight()
-            result.steps.append(['evaluateFunction', position])
-            
+                for n in node.args:
+                    traverseCode(n, line, result)
+                    result.moveLeft()
+                    result.moveParentRight()
+                result.moveUp()
+                result.moveRight()
+                result.steps.append(['evaluateFunction', position])
+
     elif name == 'Attribute':
         type = node.func.value.__class__.__name__
         assert type == 'Name'
@@ -244,11 +246,11 @@ def handleCall(node, line, result):
         result.steps.append(['addFunction', node.func.attr, position2, len(node.args), '?'])
 
         result.moveLeft()
-        
+
         if node.func.attr == 'append' and 'list' in result.classes:
             result.initSteps.append(['createClass', 'list'])
             result.initSteps.append(['createFunction', 'append', 'append' + '(item)', '1', '-1', 'list'])
-        
+
         result.moveDown()
         result.moveParentRight()
         for n in node.args:
@@ -325,9 +327,9 @@ def handleExpr(node, line, result):
     result.resetPosition()
 
 
-def handleFor(node, line, result):    
-    
-    #TODO: for x in range(3)
+def handleFor(node, line, result):
+
+    # TODO: for x in range(3)
     assert node.iter.__class__.__name__ == 'Name' or (node.iter.__class__.__name__ == 'Call' and node.iter.func.id == 'range')
     assert node.target.__class__.__name__ == 'Name'
 
@@ -337,16 +339,16 @@ def handleFor(node, line, result):
     
 
     result.checkLine(line)
-        
+
     label1 = result.getNextLabel()
     label2 = result.getNextLabel()
     label3 = result.getNextLabel()
     label4 = result.getNextLabel()
-    
+
     result.breakStack.append([label1, label3])
-    
-    iterator = result.getNextIterator()    
-    result.checkLine(line)    
+
+    iterator = result.getNextIterator()
+    result.checkLine(line)
     
     if not rangeFor:
         result.steps.append(['_createIterator', iterator, '@' + node.iter.id])
@@ -355,12 +357,13 @@ def handleFor(node, line, result):
         result.resetPosition()
         result.steps.append(['clearEvaluationArea_'])
         result.steps.append(['_createIterator', iterator, '-1'])
-    
+        
     result.steps.append(['_label', label1])
     result.steps.append(['_iterate', iterator, '@' + label2, '@' + label3])
     result.steps.append(['_label', label2])
     result.steps.append(['takeNext', iterator, result.getPosition()])
     result.steps.append(['assign', node.target.id])
+
     for n in node.body:
         traverseCode(n, line, result)
     result.steps.append(['setLine', line])
@@ -373,12 +376,13 @@ def handleFor(node, line, result):
     result.steps.append(['_label', label4])
     result.breakStack.pop()
 
+
 def handleFunctionDef(node, line, result, className=None, isCtor=False):
     args = [x.arg for x in node.args.args]
     label = result.getNextLabel()
     label2 = result.getNextLabel()
     argCount = len(args)
-    
+
     if className != None:
         argCount -= 1
 
@@ -442,7 +446,7 @@ def handleList(node, line, result, type='list'):
     result.steps.append(['createInstance', type])
     pos = result.getPosition()
     result.classes.append('list')
-    
+
     if len(node.elts) > 0:
         result.steps.append(['addCollectionInitializer', '-1', pos, len(node.elts)])
         result.moveDown()
@@ -507,17 +511,32 @@ def handleReturn(node, line, result):
 
 def handleSubscript(node, line, result):
     # TODO:
-    assert len(node.slice._fields) == 1 and 'value' in node.slice._fields
+    assert len(node.slice._fields) <= 2 or node.slice.step == None
 
     pos = result.getPosition()
     traverseCode(node.value, line, result)
 
-    result.steps.append(['addOperator', '[ ]', result.getPosition()])
-    result.addInitStep(['createOperator', '[ ]', 'pr', '', ' [ # ]'])
+    if len(node.slice._fields) == 1:
+        result.steps.append(['addOperator', '[ ]', result.getPosition()])
+        result.addInitStep(['createOperator', '[ ]', 'pr', '', ' [ # ]'])
+    elif len(node.slice._fields) == 3 and node.slice.step == None:
+        result.steps.append(['addOperator', '[ : ]', result.getPosition()])
+        result.addInitStep(['createOperator', '[ : ]', 'pr', '', ' [ # : # ]'])
+        
     result.moveLeft()
     result.moveDown()
+    
     result.moveParentRight()
-    traverseCode(node.slice.value, line, result)
+    
+    if len(node.slice._fields) == 1:
+        traverseCode(node.slice.value, line, result)
+    elif len(node.slice._fields) == 3 and node.slice.step == None:
+        traverseCode(node.slice.lower, line, result)
+        result.moveLeft()
+        result.moveParentRight()
+        if node.slice.upper != None:
+            traverseCode(node.slice.upper, line, result)
+        
     result.steps.append(['getValueAtIndex', pos])
     result.moveUp()
     result.moveRight()
@@ -541,17 +560,18 @@ def handleUnaryOp(node, line, result):
         result.steps.append(['addValue', '-' + str(node.operand.n), result.getPosition(), node.operand.n.__class__.__name__])
     elif name == 'UAdd':
         result.steps.append(['addValue', node.operand.n, result.getPosition(), node.operand.n.__class__.__name__])
+        result.steps.append(['evaluateOperator', position])
+        result.moveLeft()
     elif name in ops:
         result.steps.append(['addOperator', ops[name], position])
         result.addInitStep(['createOperator', ops[name], 'r'])
         result.moveRight()
         traverseCode(node.operand, line, result)
+        result.steps.append(['evaluateOperator', position])
+        result.moveLeft()
     else:
         sys.stderr.write('Warning: Unknown operator {}.\n'.format(name))
-
-    result.steps.append(['evaluateOperator', position])
-    result.moveLeft()
-
+        
 
 def handleWhile(node, line, result):
     label0 = result.getNextLabel()
@@ -595,9 +615,9 @@ def traverseCode(node, line, result):
 
 
 def main():
-    
     code = """
-max(5, abs(2*-3))
+a = [1, 2, 3, 4, 5]
+print(a[1:-1])
 """.strip()
 
     tree = ast.parse(code)

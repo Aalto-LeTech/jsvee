@@ -45,6 +45,22 @@
       if (op == "or")
         op = "||";
 
+      
+      if (op === '**') {
+        var result =  Math.pow(+p1, +p2);
+        var resultType = 'int';
+        
+        if (params[0].attr('data-type') === 'float' || params[1].attr('data-type') === 'float') {
+          resultType = 'float';
+          if (result.toString().indexOf(".") < 0) {
+            result = result.toFixed("1");
+          }
+        }
+        
+        ready(JSVEE.utils.ui.findOrCreateValue(area, result, resultType));
+        return;
+      }
+      
       if (op == 'in') {
         var collection = JSVEE.utils.ui.findValueById(area, params[1].attr('data-id'));
         if (collection.find('.jsvee-value[data-value="' + params[0].text() + '"]').length > 0) {
@@ -60,7 +76,8 @@
           ready(newElement);
           return;
         }
-      }
+      }    
+
 
       if (op == '==' && p1 == 'None') {
         p1 = '"None"';
@@ -344,5 +361,157 @@
   };
 
   JSVEE.registerAction('raiseError', JSVEE.handlers.actions.raiseError);
+  
+  // Overrides the original implementation to support slicing
+  // supports a[1], a[-1], a[1:], a[1:3], a[1:-1], stepping not supported
+  JSVEE.handlers.actions.getValueAtIndex = function (ready, position) {
+
+    var op = JSVEE.utils.ui.findElement(this.area, position);
+
+    if (op.attr('data-name') === '[ ]' && op.find('.jsvee-value').eq(1).attr('data-type') === 'str') {
+      // Getting a value from a dictionary by key
+      JSVEE.handlers.actions.getValueByKey.call(this, ready, position);
+      return;
+    }
+
+    var source = op.find('.jsvee-value').first();
+    var id = source.attr('data-id');
+
+    if (source.attr('data-type') !== 'str') {
+      var index = +op.find('.jsvee-value').eq(1).text();
+
+      if (index < 0) {
+        index = JSVEE.utils.ui.findValueById(this.area, id).find('.jsvee-value').length - 1;
+      }
+
+      if (op.attr('data-name') === '[ ]') {
+
+        var value = JSVEE.utils.ui.findValueInCollection(this.area, id, index);
+
+        if (value.length == 0) {
+          throw "Incorrect index.";
+        }
+
+        op.replaceWith(value.clone());
+        ready(value);
+
+      } else if (op.attr('data-name') === '[ : ]') {
+
+        var values = JSVEE.utils.ui.findValueById(this.area, id).find('.jsvee-value');
+        var instance = JSVEE.utils.ui.createInstance(this.area, source.attr('data-type'));
+        this.area.find('.jsvee-heap').append(instance);
+
+        var index = +op.find('.jsvee-value').eq(1).text();
+        var end = index + 1;
+        if (op.attr('data-name') === '[ : ]' && op.find('.jsvee-value').length === 2) {
+          end = undefined;
+        } else if (op.attr('data-name') === '[ : ]' && op.find('.jsvee-value').length === 3) {
+          end = +op.find('.jsvee-value').eq(2).text();
+        }
+
+        values.slice(index, end).each(function () {
+          $(this).clone().appendTo(instance);
+        });
+
+        var ref = JSVEE.utils.ui.createReference(this.area, instance.attr('data-id'));
+        op.replaceWith(ref);
+        ready();
+
+      }
+
+    } else {
+
+      var index = +op.find('.jsvee-value').eq(1).text();
+
+      if (index < 0) {
+        index = source.attr('data-value').length - 1;
+      }
+
+      var end = index + 1;
+      if (op.attr('data-name') === '[ : ]' && op.find('.jsvee-value').length === 2) {
+        end = undefined;
+      } else if (op.attr('data-name') === '[ : ]' && op.find('.jsvee-value').length === 3) {
+        end = +op.find('.jsvee-value').eq(2).text();
+      }
+
+      var value = JSVEE.utils.ui.findOrCreateValue(this.area, source.attr('data-value').slice(index, end), 'str');
+      op.replaceWith(value);
+      ready(value);
+    }
+
+  };
+
+  JSVEE.handlers.animations.getValueAtIndex = function (ready, position) {
+
+    var op = JSVEE.utils.ui.findElement(this.area, position);
+    var source = op.find('.jsvee-value').first();
+
+    if (op.attr('data-name') === '[ ]' && op.find('.jsvee-value').eq(1).attr('data-type') === 'str') {
+      // Getting a value from a dictionary by key
+      JSVEE.handlers.animations.getValueByKey.call(this, ready, position);
+      return;
+    }
+
+    if (op.attr('data-name') !== '[ ]' || source.attr('data-type') === 'str') {
+      ready();
+      return;
+    }
+
+    var that = this;
+
+    var readyFunction = function () {
+
+      var id = op.find('.jsvee-value').first().attr('data-id');
+      var index = op.find('.jsvee-value').eq(1).text();
+
+      if (index < 0) {
+        index = JSVEE.utils.ui.findValueById(that.area, id).find('.jsvee-value').length - 1;
+      }
+
+      var value = JSVEE.utils.ui.findValueInCollection(that.area, id, index);
+
+      if (value.length == 0) {
+        throw "Incorrect index.";
+      }
+
+      JSVEE.utils.ui.animateMoveToTarget.call(that, that.area, value, op, false, ready, false, op.find('.jsvee-value')
+          .first());
+    };
+
+    JSVEE.utils.ui.flashElement.call(this, readyFunction, position);
+
+  };
+
+  JSVEE.registerAction('getValueAtIndex', JSVEE.handlers.actions.getValueAtIndex);
+
+  // Override the original setValueAtIndex to support setValueByKey
+  var originalSetValue = JSVEE.handlers.actions.setValueAtIndex;
+  var originalSetValueAnim = JSVEE.handlers.animations.setValueAtIndex;
+
+  JSVEE.handlers.actions.setValueAtIndex = function (ready, position) {
+
+    var op = JSVEE.utils.ui.findElement(this.area, position);
+    if (op.find('.jsvee-value').eq(1).attr('data-type') === 'str') {
+      // Getting a value from a dictionary by key
+      JSVEE.handlers.actions.setValueByKey.call(this, ready, position);
+      return;
+    } else {
+      originalSetValue.call(this, ready, position);
+    }
+
+  };
+
+  JSVEE.handlers.animations.setValueAtIndex = function (ready, position) {
+    var op = JSVEE.utils.ui.findElement(this.area, position);
+    if (op.find('.jsvee-value').eq(1).attr('data-type') === 'str') {
+      // Getting a value from a dictionary by key
+      JSVEE.handlers.animations.setValueByKey.call(this, ready, position);
+      return;
+    } else {
+      originalSetValueAnim.call(this, ready, position);
+    }
+  };
+
+  JSVEE.registerAction('setValueAtIndex', JSVEE.handlers.actions.setValueAtIndex); 
 
 }(jQuery));
