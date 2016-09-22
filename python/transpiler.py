@@ -242,14 +242,14 @@ def handleCall(node, line, result):
         result.moveRight()
         position2 = result.getPosition()
 
-        result.steps.append(['addValueFromVariable', node.func.value.id, position])
-        result.steps.append(['addFunction', node.func.attr, position2, len(node.args), '?'])
+        result.addInitStep(['addValueFromVariable', node.func.value.id, position])
+        result.addInitStep(['addFunction', node.func.attr, position2, len(node.args), '?'])
 
         result.moveLeft()
 
         if node.func.attr == 'append' and 'list' in result.classes:
-            result.initSteps.append(['createClass', 'list'])
-            result.initSteps.append(['createFunction', 'append', 'append' + '(item)', '1', '-1', 'list'])
+            result.addInitStep(['createClass', 'list'])
+            result.addInitStep(['createFunction', 'append', 'append' + '(item)', '1', '-1', 'list'])
 
         result.moveDown()
         result.moveParentRight()
