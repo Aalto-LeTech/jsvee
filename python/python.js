@@ -77,6 +77,40 @@
           return;
         }
       }    
+      
+      if (op == '+' && params[0].attr('data-type') == 'list' && params[1].attr('data-type') == 'list') {
+        
+        // Combining lists
+        var newCollection = JSVEE.utils.ui.createInstance(this.area, 'list');
+        this.area.find('.jsvee-heap').append(newCollection);
+        
+        var collection1 = JSVEE.utils.ui.findValueById(this.area, params[0].attr('data-id'));
+        var collection2 = JSVEE.utils.ui.findValueById(this.area, params[1].attr('data-id'));
+        
+        collection1.find('.jsvee-value').clone().appendTo(newCollection);
+        collection2.find('.jsvee-value').clone().appendTo(newCollection);
+        
+        var ref = JSVEE.utils.ui.createReference(this.area, newCollection.attr('data-id'));
+        ready(ref);
+        return;
+      }
+      
+      if (op == '*' && params[0].attr('data-type') == 'list' && params[1].attr('data-type') == 'int') {
+
+        // Repeating lists 
+        var newCollection = JSVEE.utils.ui.createInstance(this.area, 'list');
+        this.area.find('.jsvee-heap').append(newCollection);
+        
+        var collection1 = JSVEE.utils.ui.findValueById(this.area, params[0].attr('data-id'));
+
+        for (var i=0; i < +params[1].text(); i++) {
+          collection1.find('.jsvee-value').clone().appendTo(newCollection);
+        }
+        
+        var ref = JSVEE.utils.ui.createReference(this.area, newCollection.attr('data-id'));
+        ready(ref);
+        return;
+      }
 
 
       if (op == '==' && p1 == 'None') {
