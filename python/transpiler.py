@@ -63,7 +63,7 @@ class ParseResult:
 
     def resetPosition(self):
         self.positionStack = ['0']
-
+        
     def addInitStep(self, step):
         stepAsString = '|'.join([str(x) for x in step])
         for s in self.initSteps:
@@ -237,19 +237,19 @@ def handleCall(node, line, result):
 
     elif name == 'Attribute':
         type = node.func.value.__class__.__name__
-        assert type == 'Name'
 
-        result.moveRight()
-        position2 = result.getPosition()
-
-        result.addInitStep(['addValueFromVariable', node.func.value.id, position])
-        result.addInitStep(['addFunction', node.func.attr, position2, len(node.args), '?'])
+        traverseCode(node.func.value, line, result)
+        result.steps.append(['addFunction', node.func.attr, result.getPosition(), len(node.args), '?'])
 
         result.moveLeft()
 
         if node.func.attr == 'append' and 'list' in result.classes:
             result.addInitStep(['createClass', 'list'])
             result.addInitStep(['createFunction', 'append', 'append' + '(item)', '1', '-1', 'list'])
+            
+        if node.func.attr == 'split':
+            result.addInitStep(['createClass', 'str'])
+            result.addInitStep(['createFunction', 'split', 'split(sep)', '1', '-1', 'str'])
 
         result.moveDown()
         result.moveParentRight()
@@ -336,7 +336,7 @@ def handleFor(node, line, result):
     rangeFor = False
     if node.iter.__class__.__name__ == 'Call' and node.iter.func.id == 'range':
         rangeFor = True
-
+    
 
     result.checkLine(line)
 
@@ -349,7 +349,7 @@ def handleFor(node, line, result):
 
     iterator = result.getNextIterator()
     result.checkLine(line)
-
+    
     if not rangeFor:
         result.steps.append(['_createIterator', iterator, '@' + node.iter.id])
     else:
@@ -357,7 +357,7 @@ def handleFor(node, line, result):
         result.resetPosition()
         result.steps.append(['clearEvaluationArea_'])
         result.steps.append(['_createIterator', iterator, '-1'])
-
+        
     result.steps.append(['_label', label1])
     result.steps.append(['_iterate', iterator, '@' + label2, '@' + label3])
     result.steps.append(['_label', label2])
@@ -522,12 +522,12 @@ def handleSubscript(node, line, result):
     elif len(node.slice._fields) == 3 and node.slice.step == None:
         result.steps.append(['addOperator', '[ : ]', result.getPosition()])
         result.addInitStep(['createOperator', '[ : ]', 'pr', '', ' [ # : # ]'])
-
+        
     result.moveLeft()
     result.moveDown()
-
+    
     result.moveParentRight()
-
+    
     if len(node.slice._fields) == 1:
         traverseCode(node.slice.value, line, result)
     elif len(node.slice._fields) == 3 and node.slice.step == None:
@@ -536,7 +536,7 @@ def handleSubscript(node, line, result):
         result.moveParentRight()
         if node.slice.upper != None:
             traverseCode(node.slice.upper, line, result)
-
+        
     result.steps.append(['getValueAtIndex', pos])
     result.moveUp()
     result.moveRight()
@@ -571,7 +571,7 @@ def handleUnaryOp(node, line, result):
         result.moveLeft()
     else:
         sys.stderr.write('Warning: Unknown operator {}.\n'.format(name))
-
+        
 
 def handleWhile(node, line, result):
     label0 = result.getNextLabel()
@@ -600,6 +600,7 @@ def handleWhile(node, line, result):
 
     result.steps.append(['_label', label3])
     result.breakStack.pop()
+    
 
 # *********************************************************************************************************************
 
