@@ -16,7 +16,9 @@ animation in which the operations are visually executed.
 
 See [a short video](https://www.youtube.com/watch?v=Q3T_QLRWb78)
 of using Jsvee. Some animations made with Jsvee are available
-at [our smart content server](http://acos.cs.hut.fi/).
+at [our smart content server](http://acos.cs.hut.fi/). The
+file `example.zip` contains a sample package to get familiar
+with the Jsvee and Kelmu libraries.
 
 ## Repository Layout
 
@@ -159,7 +161,7 @@ JSVEE.handlers.explanations.myAction = function (parameter) {
   return 'Running my action';
 };
 
-JSVEE.registerAction('createCodeValue', JSVEE.handlers.actions.myAction);
+JSVEE.registerAction('myAction', JSVEE.handlers.actions.myAction);
 ```
 
 Because running the action and animation can have async actions, the callback `ready` must always be called when finished. Inside these functions, `this` always refers to the current Jsvee instance.
@@ -177,6 +179,9 @@ JSVEE.handlers.truthness = function (element) {
 ## Publications
 
 Teemu Sirkiä. 2014. [Exploring expression-level program visualization in CS1.](http://dx.doi.org/10.1145/2674683.2674687) In Proceedings of the 14th Koli Calling International Conference on Computing Education Research (Koli Calling '14). ACM, New York, NY, USA, 153-157.
+
+Teemu Sirkiä. 2016. [Jsvee & Kelmu: Creating and tailoring program animations for computing education.](https://doi.org/10.1109/VISSOFT.2016.24) 2016 IEEE Working
+Conference on Software Visualization (VISSOFT), 36–45
 
 ## License
 
