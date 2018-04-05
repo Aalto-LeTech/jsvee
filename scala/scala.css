@@ -1,0 +1,116 @@
+.jsvee-value[data-type="String"]:before,.jsvee-value[data-type="String"]:after
+	{
+	content: "\"";
+}
+
+.jsvee-value[data-type="Char"]:before,.jsvee-value[data-type="Char"]:after
+	{
+	content: "'";
+}
+
+.jsvee-instance[data-type="ArrayBuffer"] {
+	min-height: 35px;
+}
+
+.jsvee-animation[data-id="companionObjectMissing"] .jsvee-instance[data-type="Asiakas"] {
+	min-width: 190px;
+	min-height: 65px;
+}
+
+.jsvee-animation[data-id="companionObjectPseudo"] .jsvee-instance[data-type="Asiakas"] {
+	min-width: 100px;
+	min-height: 65px;
+}
+
+.jsvee-animation[data-id="companionObjectProper"] .jsvee-instance[data-type="Asiakas"] {
+	min-width: 100px;
+	min-height: 65px;
+}
+
+
+
+.jsvee-instance>.jsvee-name:before {
+	content: "id: ";
+}
+
+.jsvee-scala-no-icon .jsvee-instance>.jsvee-name:before {
+	content: "";
+}
+
+.jsvee-instance .jsvee-name>.jsvee-name2:before {
+	content: "(";
+}
+
+.jsvee-instance .jsvee-name>.jsvee-name2:after {
+	content: ")";
+}
+
+.jsvee-value.jsvee-ref:before {
+	content: "ref@";
+}
+
+.jsvee-value.jsvee-ref:after {
+	content: "";
+}
+
+.jsvee-heap>.jsvee-value {
+	display: none;
+}
+
+.jsvee-classes .jsvee-class>.jsvee-name {
+	background: url("class.png") no-repeat scroll 0 0 transparent;
+	padding: 0 0 4px 16px;
+}
+
+.jsvee-classes .jsvee-instance>.jsvee-name {
+	background: url("object.png") no-repeat scroll 0 0 transparent;
+	padding: 0 0 4px 16px;
+}
+
+.jsvee-classes .jsvee-scala-trait>.jsvee-name {
+	background: url("trait.png") no-repeat scroll 0 0 transparent;
+	padding: 0 0 4px 16px;
+}
+
+.jsvee-classes .jsvee-scala-package>.jsvee-name {
+	background: url("package.png") no-repeat scroll 0 0 transparent;
+	padding: 0 0 4px 16px;
+}
+
+.jsvee-classes.jsvee-scala-no-icon .jsvee-class>.jsvee-name {
+	background: none;
+	padding: 0;
+}
+
+.jsvee-classes .jsvee-scala-companion .jsvee-class {
+	display: block;
+	margin-bottom: 2px;
+}
+
+.jsvee-classes .jsvee-scala-companion .jsvee-class+.jsvee-class {
+	margin-top: 1px;
+}
+
+.jsvee-scala-companion .jsvee-instance .jsvee-name>.jsvee-name2:after {
+	content: "-luokan kumppaniolio)";
+}
+
+.jsvee-class.jsvee-instance .jsvee-variable-empty {
+	min-height: 0;
+	display: none;
+}
+
+.jsvee-value.jsvee-scala-as-code:not(.jsvee-function) {
+	background-color: white;
+	font-family: monospace;
+}
+
+.jsvee-variable-empty {
+	display: none;
+	min-height: 0px;
+}
+
+
+/*.animation .variable.scala-val {
+	border-style: dashed;
+}*/
