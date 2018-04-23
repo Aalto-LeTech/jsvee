@@ -3,66 +3,19 @@
 
   if (window.JSVEE === undefined) {
     return;
-  }
+  };
 
-  $(function () {
-    var annotations = window.annotations || window.kelmu;
-
-    if (annotations) {
-      JSVEE.afterInitialization(function () {
-        var self = this;
-        annotations.registerCallback(self.animationId,
-          function (action, parameter) {
-            if (action === 'skip') {
-              JSVEE.utils.ui.setStatusText(self.area, 'Siirrytään eteenpäin');
-              self.state.stepsToRun = +parameter;
-              self.state.animationsDisabled = true;
-              self.state.reEnableAnimations = true;
-            } else if (action === 'hideControls') {
-              self.area.find('.jsvee-controls-area').hide();
-            } else if (action === 'showSequence') {
-              self.disableStateSave = true;
-            } else if (action === 'showControls') {
-              self.area.find('.jsvee-controls-area').show();
-            } else if (action === 'getCapabilities') {
-              annotations.sendMessage(self.animationId, 'animationCapabilities', null, [ 'animationReady' ]);
-            } else if (action === 'getAnimationLength') {
-              annotations.sendMessage(self.animationId, 'animationLength', self.animationLength);
-            } else if (action === 'getButtonDefinitions') {
-              annotations.sendMessage(self.animationId, 'buttonDefinitions', null, { 'step' : '.jsvee-step',
-                'redo' : '.jsvee-redo', 'undo' : '.jsvee-undo', 'begin' : '.jsvee-begin' });
-            } else if (action === 'postponeEnd') {
-              var statusArea = self.area.find('.jsvee-status-area');
-              statusArea.text(statusArea.text()
-                  .substring(0, statusArea.text().indexOf(JSVEE.messages.animationEnded())));
-            } else if (action === 'lastSubstepShown') {
-              var statusArea = self.area.find('.jsvee-status-area');
-              statusArea.text(statusArea.text() + JSVEE.messages.animationEnded());
-            }
-          });
-      });
-
-      JSVEE.afterEachStep(true, function (instr) {
-
-        if (!this.actionsRunning || !this.state.animationsDisabled) {
-          annotations.sendMessage(this.animationId, 'animationReady');
-        }
-
-        if (this.hasEnded()) {
-          annotations.sendMessage(this.animationId, 'animationEnded');
-        }
-
-      });
-
-    }
-  });
+  //TODO: Add translations
+  var _ = function(msg) {
+    return msg;
+  };
 
   JSVEE.messages.addValue = function (value, position, type, x) {
     var valueElem = JSVEE.utils.ui.findValue(this.area, value, type);
     if (valueElem.hasClass('jsvee-scala-as-code')) {
-      return 'Noudetaan lauseke {0}'.format(value);
+      return _("Fetching expression {0}").format(value);
     }
-    return 'Noudetaan arvo {0}'.format(value);
+    return _("Fetching value {0}").format(value);
   };
   JSVEE.handlers.explanations.addValue = JSVEE.messages.addValue;
 
@@ -130,7 +83,7 @@
          * var id = this.createInstance(resultType, 'value', result); var ref =
          * $('<div></div>').addClass('value ref'); ref.attr('data-id', id);
          * ref.attr('data-type', resultType); ref.text(id); ref.attr('title',
-         * 'Viittaus olioon, joka on muistissa kohdassa ' + id); return ref;
+         * 'Reference to an object, location in memory: ' + id); return ref;
          */
       }
     }
@@ -345,122 +298,10 @@
     }
   };
 
-  JSVEE.handlers.classes['aliohjelmia'] = function (ready, area, element) {
-    var value1 = $(element.find('.jsvee-value').get(0));
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'imdbLeffa') {
-      ready(JSVEE.utils.ui.findOrCreateValue(area, "The Imitation Game", "String"));
-    } else if (element.hasClass("jsvee-function") && element.attr('data-name') == 'nayta') {
-      area.find(".jsvee-console").append("Parametriksi saatiin: " + value1.attr('data-value') + ".").append("<br />");
-      ready(JSVEE.utils.ui.findOrCreateValue(area, value1.attr('data-value').length, "Int"));
-    }
-  };
-
-  JSVEE.handlers.classes['Tyontekija'] = function (ready, area, element) {
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'Tyontekija') {
-
-      var id = $(element.find('.jsvee-value').get(0)).data('id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-
-      var names = [ "nimi", "syntynyt", "kkpalkka" ];
-
-      for ( var i = 0; i < names.length; i++) {
-        var value = $(element.find('.jsvee-value').get(i + 1));
-        var name = names[i];
-        var variable = JSVEE.utils.ui.createVariable(name);
-        variable.append(value.clone());
-        instance.append(variable);
-      }
-
-      var value = $(area.find('.jsvee-value[data-value="1.0"]').first());
-      var name = "tyoaika";
-      var variable = JSVEE.utils.ui.createVariable(name);
-      variable.append(value.clone());
-      instance.append(variable);
-
-      ready(JSVEE.utils.ui.createReference(area, id));
-    }
-
-    if (element.hasClass("jsvee-function") && element.data('name') == 'kuvaus') {
-      var id = $(element.find('.jsvee-value').get(0)).data('id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-      var nimi = instance.find('.jsvee-variable[data-name="nimi"] .jsvee-value').first().attr('data-value');
-      var syntynyt = instance.find('.jsvee-variable[data-name="syntynyt"] .jsvee-value').first().attr('data-value');
-      var tyoaika = instance.find('.jsvee-variable[data-name="tyoaika"] .jsvee-value').first().attr('data-value');
-      var kkpalkka = instance.find('.jsvee-variable[data-name="kkpalkka"] .jsvee-value').first().attr('data-value');
-      var kuvaus = nimi + " (s. " + syntynyt + "), palkka " + tyoaika + " * " + kkpalkka + " euroa";
-      ready(JSVEE.utils.ui.findOrCreateValue(area, kuvaus, "String"));
-    }
-
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'ikaVuonna') {
-      var id = $(element.find('.jsvee-value').get(0)).attr('data-id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-      var syntynyt = parseInt(instance.find('.jsvee-variable[data-name="syntynyt"] .jsvee-value').first().attr(
-        'data-value'), 10);
-      var vuosi = parseInt($(element.find('.jsvee-value').get(1)).attr('data-value'), 10);
-      ready(JSVEE.utils.ui.findOrCreateValue(area, vuosi - syntynyt, "Int"));
-    }
-
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'korotaPalkkaa') {
-      var id = $(element.find('.jsvee-value').get(0)).attr('data-id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-      var palkka = parseFloat(instance.find('.jsvee-variable[data-name="kkpalkka"] .jsvee-value').first().attr(
-        'data-value'));
-      var korotus = parseFloat($(element.find('.jsvee-value').get(1)).attr('data-value'));
-      var value = JSVEE.utils.ui.findOrCreateValue(area, palkka * korotus, "Int");
-      instance.find('.jsvee-variable[data-name="kkpalkka"] .jsvee-value').first().replaceWith(value.clone());
-      ready(value);
-    }
-  };
-
   JSVEE.handlers.classes['None'] = function (ready, area, element) {
     if (element.hasClass("jsvee-function") && element.attr('data-name') == 'getOrElse') {
       var val = $(element.find('.jsvee-value').get(1));
       ready(val.clone().removeClass("jsvee-scala-as-code"));
-    }
-  };
-
-  JSVEE.handlers.classes['radio'] = function (ready, area, element) {
-    var pikavalinnat = [ 87900, 94000, 94900, 88600 ];
-    var nimet = {};
-    nimet[87900] = "YLE 1";
-    nimet[94000] = "Radio Suomi";
-    nimet[88600] = "Radio Helsinki";
-    nimet[94900] = "Radio Rock";
-    nimet[106200] = "Radio Nova";
-    nimet[91900] = "YleX";
-
-    var nimi = function (taajuus) {
-      if (typeof nimet[taajuus] !== "undefined") {
-        return nimet[taajuus];
-      } else {
-        return "kohinaa";
-      }
-    };
-
-    var kuvaus = function () {
-      var taajuus = area.find('.jsvee-class[data-type="radio"] .jsvee-variable[data-name="taajuusKHz"] .jsvee-value')
-          .attr('data-value');
-      var taajuusF = parseFloat(taajuus);
-      return (taajuusF / 1000.0).toFixed(1) + "MHz: " + nimi(taajuus);
-    };
-
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'valitse') {
-      var nro = $(element.find('.jsvee-value').get(1)).attr('data-value') - 1;
-      var taajuus = area.find('.jsvee-class[data-type="radio"] .jsvee-variable[data-name="taajuusKHz"] .jsvee-value');
-      taajuus.text(pikavalinnat[nro]);
-      taajuus.attr('data-value', pikavalinnat[nro]);
-      JSVEE.utils.ui.findOrCreateValue(area, pikavalinnat[nro], "Int");
-      ready(JSVEE.utils.ui.findOrCreateValue(area, kuvaus(), "String").clone());
-    } else if (element.hasClass("jsvee-function") && element.attr('data-name') == 'virita') {
-      var nro = $(element.find('.jsvee-value').get(1)).attr('data-value');
-      var askel = area.find('.jsvee-class[data-type="radio"] .jsvee-variable[data-name="pykalaKHz"] .jsvee-value')
-          .attr('data-value');
-      var taajuus = area.find('.jsvee-class[data-type="radio"] .jsvee-variable[data-name="taajuusKHz"] .jsvee-value');
-      var uusi = parseInt(taajuus.attr('data-value')) + parseInt(askel) * parseInt(nro);
-      taajuus.text(uusi);
-      taajuus.attr('data-value', uusi);
-      JSVEE.utils.ui.findOrCreateValue(area, uusi, "Int");
-      ready(JSVEE.utils.ui.findOrCreateValue(area, kuvaus(), "String").clone());
     }
   };
 
@@ -480,154 +321,6 @@
       var id = $(element.find('.jsvee-value').get(0)).attr('data-id');
       var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
       ready(instance.find('.jsvee-value').first().clone());
-    }
-  };
-
-  JSVEE.handlers.classes['Category'] = function (ready, area, element) {
-
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'Category') {
-
-      var id = $(element.find('.jsvee-value').get(0)).attr('data-id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-      instance.attr('data-best', '-1');
-      instance.attr('data-bestRef', '-1');
-      var names = [ "name", "unit" ];
-
-      for ( var i = 0; i < names.length; i++) {
-        var value = $(element.find('.jsvee-value').get(i + 1));
-        var name = names[i];
-        var variable = JSVEE.utils.ui.createVariable(name);
-        variable.append(value.clone());
-        instance.append(variable);
-      }
-
-      ready(JSVEE.utils.ui.createReference(area, id));
-
-    }
-
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'addExperience') {
-      var id = $(element.find('.jsvee-value').get(0)).attr('data-id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-
-      var expId = $(element.find('.jsvee-value').get(1)).data('id');
-      var expInstance = area.find('.jsvee-heap .jsvee-instance[data-id="' + expId + '"]').first();
-
-      var other = expInstance.find('.jsvee-variable[data-name="rating"] .jsvee-value').first().attr('data-value');
-
-      if (parseInt(instance.attr('data-best'), 10) < parseInt(other, 10)) {
-        instance.attr('data-best', other);
-        instance.attr('data-bestRef', expId);
-      }
-
-      ready(createUnit());
-
-    }
-
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'favorite') {
-      var id = $(element.find('.jsvee-value').get(0)).attr('data-id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-
-      var bestRef = instance.attr('data-bestRef');
-
-      ready(JSVEE.utils.ui.createReference(this.area, bestRef));
-    }
-
-  };
-
-  JSVEE.handlers.classes['Experience'] = function (ready, area, element) {
-
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'Experience') {
-
-      var id = $(element.find('.jsvee-value').get(0)).attr('data-id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-
-      var names = [ "name", "description", "price", "rating" ];
-
-      for ( var i = 0; i < names.length; i++) {
-        var value = $(element.find('.jsvee-value').get(i + 1));
-        var name = names[i];
-        var variable = JSVEE.utils.ui.createVariable(name);
-        variable.append(value.clone());
-        instance.append(variable);
-      }
-
-      ready(JSVEE.utils.ui.createReference(area, id));
-    }
-
-  };
-
-  JSVEE.handlers.classes['EnglishAuction'] = function (ready, area, element) {
-
-    if (element.hasClass("jsvee-function") && element.attr('data-name') == 'EnglishAuction') {
-
-      var id = $(element.find('.jsvee-value').get(0)).attr('data-id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-
-      var names = [ "description", "startingPrice", "duration" ];
-
-      for ( var i = 0; i < names.length; i++) {
-        var value = $(element.find('.jsvee-value').get(i + 1));
-        var name = names[i];
-        var variable = JSVEE.utils.ui.createVariable(name);
-        variable.append(value.clone());
-        instance.append(variable);
-      }
-
-      var value = instance.find('.jsvee-variable[data-name="duration"] .jsvee-value').first();
-      var name = "remaining";
-      var variable = JSVEE.utils.ui.createVariable(name);
-      variable.append(value.clone());
-      instance.append(variable);
-
-      ready(JSVEE.utils.ui.createReference(area, id));
-
-    } else if (element.hasClass("jsvee-function") && element.attr('data-name') == 'advanceOneDay') {
-
-      var id = $(element.find('.jsvee-value').get(0)).data('id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-      var remaining = instance.find('.jsvee-variable[data-name="remaining"]').first();
-      var daysLeft = parseInt(remaining.find('.jsvee-value').first().data('value'), 10);
-      var daysLeftAfter = JSVEE.utils.ui.findOrCreateValue(area, daysLeft - 1, "Int");
-      remaining.find('.jsvee-value').replaceWith(daysLeftAfter.clone());
-
-      ready(createUnit());
-    }
-  };
-
-  JSVEE.handlers.classes['AuctionHouse'] = function (ready, area, element) {
-
-    if (element.hasClass("jsvee-function") && element.data('name') == 'AuctionHouse') {
-
-      var id = $(element.find('.jsvee-value').get(0)).attr('data-id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-
-      var names = [ "name" ];
-
-      for ( var i = 0; i < names.length; i++) {
-        var value = $(element.find('.jsvee-value').get(i + 1));
-        var name = names[i];
-        var variable = JSVEE.utils.ui.createVariable(name);
-        variable.append(value.clone());
-        instance.append(variable);
-      }
-
-      createArrayBuffer(function (buffer) {
-
-        var variable = JSVEE.utils.ui.createVariable("items");
-        variable.appendTo(instance);
-        buffer.appendTo(variable);
-
-        ready(JSVEE.utils.ui.createReference(area, id));
-      }, area, undefined, "ArrayBuffer");
-
-    }
-    if (element.hasClass("jsvee-function") && element.data('name') === 'addItem') {
-      var id = $(element.find('.jsvee-value').get(0)).data('id');
-      var instance = area.find('.jsvee-heap .jsvee-instance[data-id="' + id + '"]').first();
-      var bufferId = instance.find('.jsvee-variable[data-name="items"] .jsvee-value').first().attr('data-id');
-      var bufferInstance = area.find('.jsvee-heap .jsvee-instance[data-id="' + bufferId + '"]').first();
-      bufferInstance.append($(element.find('.jsvee-value').get(1)).clone());
-      ready();
     }
   };
 
@@ -672,7 +365,7 @@
   var createUnit = function () {
     var val = $('<div>Unit</div>').addClass('jsvee-value');
     val.attr('data-type', 'Unit').attr('data-value', 'Unit');
-    val.attr('title', 'Unit, tyhjä palautusarvo');
+    val.attr('title', _("Unit, empty return value"));
     return val;
   };
 
@@ -698,56 +391,56 @@
       type = JSVEE.utils.ui.findElement(this.area, position, true).data('type');
     }
 
-    var name = op + "-operaattori";
+    var name = op + _("-operaattori");
 
     if (op == '<')
-      name = 'vertailuoperaattori';
+      name = _("comparison operator");
     else if (op == '>')
-      name = 'vertailuoperaattori';
+      name = _("comparison operator");
     else if (op == '<=')
-      name = 'vertailuoperaattori';
+      name = _("comparison operator");
     else if (op == '>=')
-      name = 'vertailuoperaattori';
+      name = _("comparison operator");
     else if (op == '==')
-      name = 'yhtäsuuruusoperaattori';
+      name = _("equality operator");
     else if (op == '!=')
-      name = 'erisuuruusoperaattori';
+      name = _("inequality operator");
     else if (type == 'Int' || type == 'Double') {
       if (op == '+')
-        name = 'yhteenlaskuoperaattori';
+        name = _("addition operator");
       if (op == '-')
-        name = 'vähennyslaskuoperaattori';
+        name = _("subtraction operator");
       if (op == '*')
-        name = 'kertolaskuoperaattori';
+        name = _("multiplication operator");
       if (op == '/')
-        name = 'jakolaskuoperaattori';
+        name = _("division operator");
     } else if (type == 'String' && op == "+")
-      name = 'yhdistämisoperaattori';
+      name = _("concatenation operator");
     else if (type == 'ArrayBuffer' && op == "( )")
-      name = 'puskuristapoimimisoperaattori';
+      name = _("buffer apply operator");
     else if (type == 'ArrayBuffer' && op == "( ) =")
-      name = 'puskuriinsijoitusoperaattori';
+      name = _("buffer assignment operator");
     else if (type == 'ArrayBuffer' && op == "+=")
-      name = 'puskuriinlisäysoperaattori';
+      name = _("buffer append operator");
     else if (type == 'Array' && op == "( )")
-      name = 'taulukostapoimimisoperaattori';
+      name = _("array apply operator");
     else if (type == 'Array' && op == "( ) =")
-      name = 'taulukkoonsijoitusoperaattori';
+      name = _("array assignment operator");
     else if (type == 'Vector' && op == "( )")
-      name = 'vektoristapoimimisoperaattori';
+      name = _("vector apply operator");
     else if (type == 'Vector' && op == "( ) =")
-      name = 'vektoriinsijoitusoperaattori';
+      name = _("vector assignment operator");
 
-    return "Noudetaan " + name;
+    return _("Fetching ") + name;
 
   };
 
   JSVEE.handlers.explanations.addReference = function (id) {
     if (this.settings['noIcons']) {
-      return 'Noudetaan viittaus tietoon, joka on muistissa kohdassa {0}'.format(id);
+      return _("Fetching reference to data, located in memory at {0}").format(id);
     } else {
       var realId = JSVEE.utils.ui.findReference(this.area, id).attr('data-id');
-      return 'Noudetaan viittaus olioon, joka on muistissa kohdassa {0}'.format(realId);
+      return _("Fetching reference to object, located in memory at {0}").format(realId);
     }
   };
 
@@ -756,48 +449,48 @@
     var elem = JSVEE.utils.ui.findElement(this.area, position);
     var op = elem.data('name');
     var type = elem.data('class');
-    var name = op + "-operaattori";
+    var name = op + _("-operaattori");
 
     if (op == '<')
-      name = 'vertailuoperaattori';
+      name = _("comparison operator");
     else if (op == '>')
-      name = 'vertailuoperaattori';
+      name = _("comparison operator");
     else if (op == '<=')
-      name = 'vertailuoperaattori';
+      name = _("comparison operator");
     else if (op == '>=')
-      name = 'vertailuoperaattori';
+      name = _("comparison operator");
     else if (op == '==')
-      name = 'yhtäsuuruusoperaattori';
+      name = _("equality operator");
     else if (op == '!=')
-      name = 'erisuuruusoperaattori';
+      name = _("inequality operator");
     else if (type == 'Int' || type == 'Double') {
       if (op == '+')
-        name = 'yhteenlaskuoperaattori';
+        name = _("addition operator");
       if (op == '-')
-        name = 'vähennyslaskuoperaattori';
+        name = _("subtraction operator");
       if (op == '*')
-        name = 'kertolaskuoperaattori';
+        name = _("multiplication operator");
       if (op == '/')
-        name = 'jakolaskuoperaattori';
+        name = _("division operator");
     } else if (type == 'String' && op == "+")
-      name = 'yhdistämisoperaattori';
+      name = _("concatenation operator");
     else if (type == 'ArrayBuffer' && op == "( )")
-      name = 'puskuristapoimimisoperaattori';
+      name = _("buffer apply operator");
     else if (type == 'ArrayBuffer' && op == "( ) =")
-      name = 'puskuriinsijoitusoperaattori';
+      name = _("buffer assignment operator");
     else if (type == 'ArrayBuffer' && op == "+=")
-      name = 'puskuriinlisäysoperaattori';
+      name = _("buffer append operator");
     else if (type == 'Array' && op == "( )")
-      name = 'taulukostapoimimisoperaattori';
+      name = _("array apply operator");
     else if (type == 'Array' && op == "( ) =")
-      name = 'taulukkoonsijoitusoperaattori';
+      name = _("array assignment operator");
     else if (type == 'Vector' && op == "( )")
-      name = 'vektoristapoimimisoperaattori';
+      name = _("vector apply operator");
     else if (type == 'Vector' && op == "( ) =")
-      name = 'vektoriinsijoitusoperaattori';
+      name = _("vector assignment operator");
 
 
-    return "Suoritetaan " + name;
+    return _("Evaluating ") + name;
   };
 
   JSVEE.handlers.explanations.addFunction = function (name, position, params, className) {
@@ -806,14 +499,14 @@
         || this.animationId == 'bufferRef2' || this.animationId == 'bufferRef3';
 
     if (typeof name === "undefined") {
-      return "Noudetaan funktio";
+      return _("Fetching function");
     } else {
       if (noFunctionTerm) {
         if (className !== undefined && name == className
             && this.area.find('.jsvee-class.jsvee-instance .jsvee-function[data-name="' + name + '"]').length > 0) {
-          return "Noudetaan " + name + "-luomiskäsky";
+          return _("Fetching command to create {0}").format(name);
         } else {
-          return "Noudetaan käsky " + name;
+          return _("Fetching command ") + name;
         }
       } else {
 
@@ -826,18 +519,18 @@
           if (name == className
               && (this.area.find('.jsvee-class.jsvee-instance .jsvee-function[data-name="' + name + '"]').length > 0)
               || name == "Some") {
-            return "Noudetaan " + name + "-luomiskäsky";
+            return _("Fetching command to create {0}").format(name);
           } else if (name == className) {
-            return "Noudetaan " + name + "-luokan konstruktori";
+            return _("Fetching class constructor for {0}").format(name);
           } else if (this.area.find(
             '.jsvee-classes .jsvee-class[data-name="' + className + '"] .jsvee-function[data-name="' + name + '"]')
               .attr('data-static') === "true") {
-            return "Noudetaan funktio " + name;
+            return _("Fetching function ") + name;
           } else {
-            return "Noudetaan metodi " + name;
+            return _("Fetching method ") + name;
           }
         } else {
-          return "Noudetaan funktio " + name;
+          return _("Fetching function ") + name;
         }
 
       }
@@ -857,9 +550,9 @@
         if (className !== undefined && name == className
             && (this.area.find('.jsvee-class.jsvee-instance .jsvee-function[data-name="' + name + '"]').length > 0)
             || name == "Some") {
-          return "Suoritetaan " + name + "-luomiskäsky";
+          return _("Evaluating command to create {0}").format(name);
         } else {
-          return "Suoritetaan käsky " + name;
+          return _("Evaluating command ") + name;
         }
       } else {
 
@@ -867,18 +560,18 @@
           if (name == className
               && (this.area.find('.jsvee-class.jsvee-instance .jsvee-function[data-name="' + name + '"]').length > 0)
               || name == "Some") {
-            return "Suoritetaan " + name + "-luomiskäsky";
+            return _("Evaluating command to create {0}").format(name);
           } else if (name == className) {
-            return "Suoritetaan " + name + "-luokan konstruktori";
+            return _("Evaluating class constructor for {0}").format(name);
           } else if (this.area.find(
             '.jsvee-classes .jsvee-class[data-name="' + className + '"] .jsvee-function[data-name="' + name + '"]')
               .attr('data-static') === "true") {
-            return "Suoritetaan funktio " + name;
+            return _("Evaluating function ") + name;
           } else {
-            return "Suoritetaan metodi " + name;
+            return _("Evaluating method ") + name;
           }
         } else {
-          return "Suoritetaan funktio " + name;
+          return _("Evaluating function ") + name;
         }
 
       }
@@ -890,22 +583,22 @@
         if (className !== undefined) {
           if (name == className
               && this.area.find('.jsvee-class.jsvee-instance .jsvee-function[data-name="' + name + '"]').length > 0) {
-            return "Aloitetaan " + name + "-luomiskäskyn suoritus";
+            return _("Starting evaluation of command to create {0}").format(name);
           } else if (name == className) {
-            return "Aloitetaan " + name + "-luokan konstruktorin suoritus";
+            return _("Starting evaluation of class constructor for {0}").format(name);
           } else if (this.area.find(
             '.jsvee-classes .jsvee-class[data-name="' + className + '"] .jsvee-function[data-name="' + name + '"]')
               .attr('data-static') === "true") {
-            return "Aloitetaan funktion " + name + " suoritus";
+            return _("Starting evaluation of function {0}").format(name);
           } else {
-            return "Aloitetaan metodin " + name + " suoritus";
+            return _("Starting evaluation of method {0}").format(name);
           }
         } else {
-          return "Aloitetaan funktion " + name + " suoritus";
+          return _("Starting evaluation of function {0}").format(name);
         }
 
       } else {
-        return "Aloitetaan funktion suoritus";
+        return _("Starting evaluation of function");
       }
     }
   };
@@ -974,7 +667,7 @@
     var c = $('<div></div>').addClass('jsvee-class').attr('data-name', name).addClass('jsvee-scala-package');
     var n = $('<div></div>').addClass('jsvee-name').append(document.createTextNode(name));
 
-    c.attr('title', "Pakkausolio " + name);
+    c.attr('title', _("Package object ") + name);
     n.appendTo(c);
     c.appendTo(classes);
 
@@ -989,7 +682,7 @@
     var c = $('<div></div>').addClass('jsvee-class').attr('data-name', name).addClass('jsvee-scala-trait');
     var n = $('<div></div>').addClass('jsvee-name').append(document.createTextNode(name));
 
-    c.attr('title', "Piirreluokka " + name);
+    c.attr('title', _("Trait ") + name);
     n.appendTo(c);
     c.appendTo(classes);
     ready();
@@ -1077,7 +770,7 @@
    */
   JSVEE.handlers.actions.createCodeValue = function (ready, value, type, functionName, paramCount, pc) {
     var val = JSVEE.utils.ui.findOrCreateValue(this.area, value, type);
-    val.attr('title', 'Evaluoimaton parametriarvo');
+    val.attr('title', _("Unevalued parameter"));
     if (functionName) {
       val.attr('data-name', functionName);
       val.attr('data-params', paramCount);
@@ -1125,7 +818,7 @@
   };
 
   JSVEE.handlers.explanations.createFunctionLiteral = function () {
-    return "Luodaan funktioliteraali";
+    return _("Creating function literal");
   };
 
   JSVEE.registerAction('createFunctionLiteral', JSVEE.handlers.actions.createFunctionLiteral);
@@ -1135,25 +828,25 @@
     if (this.settings.hasOwnProperty('noIcons')) {
       this.area.find('.jsvee-class').each(function () {
         var elem = $(this);
-        elem.attr('title', 'Tyypin ' + elem.data('name') + ' määrittely');
+        elem.attr('title', _("Definition of type {0}").format(elem.data('name')));
       });
 
       this.area.find('.jsvee-function').each(function () {
         var elem = $(this);
-        elem.attr('title', 'Funktion ' + elem.data('name') + " määrittely");
+        elem.attr('title', _("Definition of function {0}").format(elem.data('name')));
       });
 
-      this.area.find('.jsvee-function[data-name="println"]').attr('title', 'println-aliohjelman määrittely');
-      this.area.find('.jsvee-function[data-name="Buffer"]').attr('title', 'Puskurin luomiskäskyn määrittely');
+      this.area.find('.jsvee-function[data-name="println"]').attr('title', _("definition of println subroutine"));
+      this.area.find('.jsvee-function[data-name="Buffer"]').attr('title', _("definition of buffer creation command"));
 
       this.area.find('.jsvee-instance[data-type="String"]').each(function () {
         var elem = $(this);
-        elem.attr('title', 'Merkkijono, joka on muistissa kohdassa ' + elem.data('id'));
+        elem.attr('title', _("String, located in the memory at ") + elem.data('id'));
       });
 
       this.area.find('.jsvee-instance[data-type="ArrayBuffer"]').each(function () {
         var elem = $(this);
-        elem.attr('title', 'Puskuri, joka on muistissa kohdassa ' + elem.data('id'));
+        elem.attr('title', _("Buffer, located in the memory at ") + elem.data('id'));
       });
 
     } else {
@@ -1161,15 +854,15 @@
       this.area.find('.jsvee-class .jsvee-function').each(function () {
         var elem = $(this);
         if (elem.data('name') == elem.data('class'))
-          elem.attr('title', elem.data('name') + "-luokan konstruktorin määrittely");
+          elem.attr('title', _("Definition of class constructor for {0}").format(elem.data('name')));
         else
-          elem.attr('title', "Metodin " + elem.data('name') + " määrittely");
+          elem.attr('title', _("Definition of method {0}").format(elem.data('name')));
       });
 
       this.area.find('.jsvee-class.jsvee-instance .jsvee-function').each(function () {
         var elem = $(this);
         if (elem.data('name') == elem.data('class'))
-          elem.attr('title', elem.data('name') + "-luomiskäsky");
+          elem.attr('title', _("Command to create {0}").format(elem.data('name')));
       });
 
     }
@@ -1178,44 +871,42 @@
       var elem = $(this);
 
       if (elem.data('name') == '>')
-        elem.attr('title', 'Vertailuoperaattori');
+        elem.attr('title', _("Comparison operator"));
       else if (elem.data('name') == '<')
-        elem.attr('title', 'Vertailuoperaattori');
+        elem.attr('title', _("Comparison operator"));
       else if (elem.data('name') == '>=')
-        elem.attr('title', 'Vertailuoperaattori');
+        elem.attr('title', _("Comparison operator"));
       else if (elem.data('name') == '<=')
-        elem.attr('title', 'Vertailuoperaattori');
+        elem.attr('title', _("Comparison operator"));
       else if (elem.data('name') == '==')
-        elem.attr('title', 'Yhtäsuuruusoperaattori');
+        elem.attr('title', _("Equality operator"));
       else if (elem.data('name') == '!=')
-        elem.attr('title', 'Erisuuruusoperaattori');
+        elem.attr('title', _("Inequality operator"));
       else if (elem.data('class') == 'Int' || elem.data('class') == 'Double') {
         if (elem.data('name') == '+')
-          elem.attr('title', 'Yhteenlaskuoperaattori');
+          elem.attr('title', _("Addition operator"));
         if (elem.data('name') == '-')
-          elem.attr('title', 'Vähennyslaskuoperaattori');
+          elem.attr('title', _("Subtraction operator"));
         if (elem.data('name') == '*')
-          elem.attr('title', 'Kertolaskuoperaattori');
+          elem.attr('title', _("Multiplication operator"));
         if (elem.data('name') == '/')
-          elem.attr('title', 'Jakolaskuoperaattori');
+          elem.attr('title', _("Division operator"));
       } else if (elem.data('class') == 'String' && elem.data('name') == "+")
-        elem.attr('title', 'Yhdistämisoperaattori');
-      else if (elem.data('class') == 'String' && elem.data('name') == "+")
-        elem.attr('title', 'Yhtäsuuruusoperaattori');
+        elem.attr('title', _("Concatenation operator"));
       else if (elem.data('class') == 'ArrayBuffer' && elem.data('name') == "( )")
-        elem.attr('title', 'Puskuristapoimimisoperaattori');
+        elem.attr('title', _("Buffer apply operator"));
       else if (elem.data('class') == 'ArrayBuffer' && elem.data('name') == "( ) =")
-        elem.attr('title', 'Puskuriinsijoitusoperaattori');
+        elem.attr('title', _("Buffer assignment operator"));
       else if (elem.data('class') == 'Array' && elem.data('name') == "( )")
-        elem.attr('title', 'Taulukostapoimimisoperaattori');
+        elem.attr('title', _("Array apply operator"));
       else if (elem.data('class') == 'Array' && elem.data('name') == "( ) =")
-        elem.attr('title', 'Taulukkoonsijoitusoperaattori');
+        elem.attr('title', _("Array assignment operator"));
       else if (elem.data('class') == 'ArrayBuffer' && elem.data('name') == "+=")
-        elem.attr('title', 'Puskuriinlisäysoperaattori');
+        elem.attr('title', _("Buffer append operator"));
       else if (elem.data('class') == 'Vector' && elem.data('name') == "( )")
-        elem.attr('title', 'Vektoristapoimimisoperaattori');
+        elem.attr('title', _("Vector apply operator"));
       else if (elem.data('class') == 'Vector' && elem.data('name') == "( ) =")
-        elem.attr('title', 'Vektoriinsijoitusoperaattori');
+        elem.attr('title', _("Vector assignment operator"));
     });
 
     var frames = this.area.find('.jsvee-stack-frame');
@@ -1228,37 +919,37 @@
       if (frames.length == 1) {
         frame.find('.jsvee-area-label')
             .text(
-              'Kehys'
-                  + (frame.attr('data-line') === undefined ? '' : ', suoritus käynnissä rivillä '
+              _("Frame")
+                  + (frame.attr('data-line') === undefined ? '' : _(", execution ongoing, on line ")
                       + frame.attr('data-line')));
       } else if (index == frames.length - 1) {
         frame.find('.jsvee-area-label').text(
-          'Kehys, suoritus kesken'
-              + (frame.attr('data-line') === undefined ? '' : ' rivillä ' + frame.attr('data-line')));
+          _("Frame, execution unfinished")
+              + (frame.attr('data-line') === undefined ? '' : _(" on line ") + frame.attr('data-line')));
       } else if (index == 0) {
         var func = frame.next('.jsvee-stack-frame').find('.jsvee-function.jsvee-active').first().attr('data-name');
         if (func === undefined)
-          func = "nimetön funktio";
+          func = _("unnamed function");
         if (frame.attr('data-line') !== undefined) {
           frame.find('.jsvee-area-label').text(
-            'Kehys ('
+            _("Frame") + ' ('
                 + func
                 + ')'
-                + (frame.attr('data-line') === undefined ? '' : ', suoritus käynnissä rivillä '
+                + (frame.attr('data-line') === undefined ? '' : _(", execution ongoing, on line ")
                     + frame.attr('data-line')));
         } else {
-          frame.find('.jsvee-area-label').text('Kehys (' + func + ')');
+          frame.find('.jsvee-area-label').text(_("Frame") +  ' (' + func + ')');
         }
       } else {
         var func = frame.next('.jsvee-stack-frame').find('.jsvee-function.jsvee-active').first().attr('data-name');
         if (func === undefined)
-          func = "nimetön funktio";
+          func = _("unnamed function");
         if (frame.attr('data-line') !== undefined) {
           frame.find('.jsvee-area-label').text(
-            'Kehys (' + func + '), suoritus kesken'
-                + (frame.attr('data-line') === undefined ? '' : ' rivillä ' + frame.attr('data-line')));
+            _("Frame") + ' (' + func + ')' + _("execution unfinished")
+                + (frame.attr('data-line') === undefined ? '' : _(" on line ") + frame.attr('data-line')));
         } else {
-          frame.find('.jsvee-area-label').text('Kehys (' + func + '), suoritus kesken');
+          frame.find('.jsvee-area-label').text(_("Frame") +  ' (' + func + ')' + _("execution unfinished"));
         }
       }
 

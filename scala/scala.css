@@ -12,23 +12,6 @@
 	min-height: 35px;
 }
 
-.jsvee-animation[data-id="companionObjectMissing"] .jsvee-instance[data-type="Asiakas"] {
-	min-width: 190px;
-	min-height: 65px;
-}
-
-.jsvee-animation[data-id="companionObjectPseudo"] .jsvee-instance[data-type="Asiakas"] {
-	min-width: 100px;
-	min-height: 65px;
-}
-
-.jsvee-animation[data-id="companionObjectProper"] .jsvee-instance[data-type="Asiakas"] {
-	min-width: 100px;
-	min-height: 65px;
-}
-
-
-
 .jsvee-instance>.jsvee-name:before {
 	content: "id: ";
 }
@@ -91,8 +74,12 @@
 	margin-top: 1px;
 }
 
-.jsvee-scala-companion .jsvee-instance .jsvee-name>.jsvee-name2:after {
+:lang(fi) .jsvee-scala-companion .jsvee-instance .jsvee-name>.jsvee-name2:after {
 	content: "-luokan kumppaniolio)";
+}
+
+:lang(en) .jsvee-scala-companion .jsvee-instance .jsvee-name>.jsvee-name2:after {
+	content: " class' companion object)";
 }
 
 .jsvee-class.jsvee-instance .jsvee-variable-empty {
