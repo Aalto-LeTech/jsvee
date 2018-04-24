@@ -391,7 +391,7 @@
       type = JSVEE.utils.ui.findElement(this.area, position, true).data('type');
     }
 
-    var name = op + _("-operaattori");
+    var name = op + _("-operator");
 
     if (op == '<')
       name = _("comparison operator");
