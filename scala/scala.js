@@ -449,7 +449,7 @@
     var elem = JSVEE.utils.ui.findElement(this.area, position);
     var op = elem.data('name');
     var type = elem.data('class');
-    var name = op + _("-operaattori");
+    var name = op + _("-operator");
 
     if (op == '<')
       name = _("comparison operator");
