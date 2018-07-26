@@ -1,0 +1,312 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: JSVEE Scala language pack\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-04 12:45+0300\n"
+"PO-Revision-Date: 2018-05-04 13:23+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Last-Translator: \n"
+"Language: fi\n"
+
+#: scala.js:928 scala.js:950
+msgid " on line "
+msgstr " rivillä "
+
+#: scala.js:923 scala.js:938
+msgid ", execution ongoing, on line "
+msgstr ", suoritus käynnissä, rivillä "
+
+#: scala.js:394 scala.js:452
+msgid "-operator"
+msgstr "-operaattori"
+
+#: scala.js:887
+msgid "Addition operator"
+msgstr "Yhteenlaskuoperaattori"
+
+#: scala.js:901
+msgid "Array apply operator"
+msgstr "Taulukostapoimimisoperaattori"
+
+#: scala.js:903
+msgid "Array assignment operator"
+msgstr "Taulukkoonsijoitusoperaattori"
+
+#: scala.js:905
+msgid "Buffer append operator"
+msgstr "Puskuriinlisäysoperaattori"
+
+#: scala.js:897
+msgid "Buffer apply operator"
+msgstr "Puskuristapoimimisoperaattori"
+
+#: scala.js:899
+msgid "Buffer assignment operator"
+msgstr "Puskuriinsijoitusoperaattori"
+
+#: scala.js:849
+msgid "Buffer, located in the memory at "
+msgstr "Puskuri, joka on muistissa kohdassa "
+
+#: scala.js:865
+msgid "Command to create {0}"
+msgstr "{0}-luomiskäsky"
+
+#: scala.js:874 scala.js:876 scala.js:878 scala.js:880
+msgid "Comparison operator"
+msgstr "Vertailuoperaattori"
+
+#: scala.js:895
+msgid "Concatenation operator"
+msgstr "Yhdistämisoperaattori"
+
+#: scala.js:821
+msgid "Creating function literal"
+msgstr "Luodaan funktioliteraali"
+
+#: scala.js:857
+msgid "Definition of class constructor for {0}"
+msgstr "{0}-luokan konstruktorin määrittely"
+
+#: scala.js:836
+msgid "Definition of function {0}"
+msgstr "Funktion {0} määrittely"
+
+#: scala.js:859
+msgid "Definition of method {0}"
+msgstr "Metodin {0} määrittely"
+
+#: scala.js:831
+msgid "Definition of type {0}"
+msgstr "Tyypin {0} määrittely"
+
+#: scala.js:893
+msgid "Division operator"
+msgstr "Jakolaskuoperaattori"
+
+#: scala.js:882
+msgid "Equality operator"
+msgstr "Yhtäsuuruusoperaattori"
+
+#: scala.js:493
+msgid "Evaluating "
+msgstr "Suoritetaan "
+
+#: scala.js:565
+msgid "Evaluating class constructor for {0}"
+msgstr "Suoritetaan {0}-luokan konstruktori"
+
+#: scala.js:555
+msgid "Evaluating command "
+msgstr "Suoritetaan käsky "
+
+#: scala.js:553 scala.js:563
+msgid "Evaluating command to create {0}"
+msgstr "Suoritetaan {0}-luomiskäsky"
+
+#: scala.js:569 scala.js:574
+msgid "Evaluating function "
+msgstr "Suoritetaan funktio "
+
+#: scala.js:571
+msgid "Evaluating method "
+msgstr "Suoritetaan metodi "
+
+#: scala.js:434
+msgid "Fetching "
+msgstr "Noudetaan "
+
+#: scala.js:524
+msgid "Fetching class constructor for {0}"
+msgstr "Noudetaan {0}-luokan konstruktori"
+
+#: scala.js:509
+msgid "Fetching command "
+msgstr "Noudetaan käsky "
+
+#: scala.js:507 scala.js:522
+msgid "Fetching command to create {0}"
+msgstr "Noudetaan {0}-luomiskäsky"
+
+#: scala.js:16
+msgid "Fetching expression {0}"
+msgstr "Noudetaan lauseke {0}"
+
+#: scala.js:502
+msgid "Fetching function"
+msgstr "Noudetaan funktio"
+
+#: scala.js:528 scala.js:533
+msgid "Fetching function "
+msgstr "Noudetaan funktio "
+
+#: scala.js:530
+msgid "Fetching method "
+msgstr "Noudetaan metodi "
+
+#: scala.js:440
+msgid "Fetching reference to data, located in memory at {0}"
+msgstr "Noudetaan viittaus tietoon, joka on muistissa kohdassa {0}"
+
+#: scala.js:443
+msgid "Fetching reference to object, located in memory at {0}"
+msgstr "Noudetaan viittaus olioon, joka on muistissa kohdassa {0}"
+
+#: scala.js:18
+msgid "Fetching value {0}"
+msgstr "Noudetaan arvo {0}"
+
+#: scala.js:922 scala.js:935 scala.js:941 scala.js:949 scala.js:952
+msgid "Frame"
+msgstr "Kehys"
+
+#: scala.js:927
+msgid "Frame, execution unfinished"
+msgstr "Kehys, suoritus kesken"
+
+#: scala.js:884
+msgid "Inequality operator"
+msgstr "Erisuuruusoperaattori"
+
+#: scala.js:891
+msgid "Multiplication operator"
+msgstr "Kertolaskuoperaattori"
+
+#: scala.js:670
+msgid "Package object "
+msgstr "Pakkausolio "
+
+#: scala.js:588
+msgid "Starting evaluation of class constructor for {0}"
+msgstr "Aloitetaan {0}-luokan konstruktorin suoritus"
+
+#: scala.js:586
+msgid "Starting evaluation of command to create {0}"
+msgstr "Aloitetaan {0}-luomiskäskyn suoritus"
+
+#: scala.js:601
+msgid "Starting evaluation of function"
+msgstr "Aloitetaan funktion suoritus"
+
+#: scala.js:592 scala.js:597
+msgid "Starting evaluation of function {0}"
+msgstr "Aloitetaan funktion {0} suoritus"
+
+#: scala.js:594
+msgid "Starting evaluation of method {0}"
+msgstr "Aloitetaan metodin {0} suoritus"
+
+#: scala.js:844
+msgid "String, located in the memory at "
+msgstr "Merkkijono, joka on muistissa kohdassa "
+
+#: scala.js:889
+msgid "Subtraction operator"
+msgstr "Vähennyslaskuoperaattori"
+
+#: scala.js:685
+msgid "Trait "
+msgstr "Piirreluokka "
+
+#: scala.js:773
+msgid "Unevalued parameter"
+msgstr "Evaluoimaton parametriarvo"
+
+#: scala.js:368
+msgid "Unit, empty return value"
+msgstr "Unit, tyhjä palautusarvo"
+
+#: scala.js:907
+msgid "Vector apply operator"
+msgstr "Vektoristapoimimisoperaattori"
+
+#: scala.js:909
+msgid "Vector assignment operator"
+msgstr "Vektoriinsijoitusoperaattori"
+
+#: scala.js:410 scala.js:468
+msgid "addition operator"
+msgstr "yhteenlaskuoperaattori"
+
+#: scala.js:426 scala.js:484
+msgid "array apply operator"
+msgstr "taulukostapoimimisoperaattori"
+
+#: scala.js:428 scala.js:486
+msgid "array assignment operator"
+msgstr "taulukkoonsijoitusoperaattori"
+
+#: scala.js:424 scala.js:482
+msgid "buffer append operator"
+msgstr "puskuriinlisäysoperaattori"
+
+#: scala.js:420 scala.js:478
+msgid "buffer apply operator"
+msgstr "puskuristapoimimisoperaattori"
+
+#: scala.js:422 scala.js:480
+msgid "buffer assignment operator"
+msgstr "puskuriinsijoitusoperaattori"
+
+#: scala.js:397 scala.js:399 scala.js:401 scala.js:403 scala.js:455
+#: scala.js:457 scala.js:459 scala.js:461
+msgid "comparison operator"
+msgstr "vertailuoperaattori"
+
+#: scala.js:418 scala.js:476
+msgid "concatenation operator"
+msgstr "yhdistämisoperaattori"
+
+#: scala.js:840
+msgid "definition of buffer creation command"
+msgstr "Puskurin luomiskäskyn määrittely"
+
+#: scala.js:839
+msgid "definition of println subroutine"
+msgstr "println-aliohjelman määrittely"
+
+#: scala.js:416 scala.js:474
+msgid "division operator"
+msgstr "jakolaskuoperaattori"
+
+#: scala.js:405 scala.js:463
+msgid "equality operator"
+msgstr "yhtäsuuruusoperaattori"
+
+#: scala.js:949 scala.js:952
+msgid "execution unfinished"
+msgstr "suoritus kesken"
+
+#: scala.js:407 scala.js:465
+msgid "inequality operator"
+msgstr "erisuuruusoperaattori"
+
+#: scala.js:414 scala.js:472
+msgid "multiplication operator"
+msgstr "kertolaskuoperaattori"
+
+#: scala.js:412 scala.js:470
+msgid "subtraction operator"
+msgstr "vähennyslaskuoperaattori"
+
+#: scala.js:932 scala.js:946
+msgid "unnamed function"
+msgstr "nimetön funktio"
+
+#: scala.js:430 scala.js:488
+msgid "vector apply operator"
+msgstr "vektoristapoimimisoperaattori"
+
+#: scala.js:432 scala.js:490
+msgid "vector assignment operator"
+msgstr "vektoriinsijoitusoperaattori"

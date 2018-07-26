@@ -46,6 +46,8 @@ Used mostly with actions.
 
 `/python` contains the Python language pack and transpiler.
 
+`/scala` contains the Scala language pack.
+
 ### Using the Repository
 
 After cloning the repository, `demo.html` should contain a runnable
