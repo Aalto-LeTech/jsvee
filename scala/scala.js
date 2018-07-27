@@ -5,8 +5,9 @@
     return;
   };
 
-  //TODO: Add translations
-  var _ = function(msg) {
+  const _ = typeof(window._) === "function" ?
+  window._ :
+  function(msg) {
     return msg;
   };
 
