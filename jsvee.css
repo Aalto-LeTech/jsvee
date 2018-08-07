@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 @import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
+div.jsvee-animation table tr, div.jsvee-animation table, div.jsvee-animation table td
+	{
+	border: 0;
+	line-height: 1;
+	vertical-align: baseline;
+}
 .jsvee-animation pre {
     font-family: Inconsolata, Monaco, Consolas, "Andale Mono", "Courier New", monospace;
     margin-left: 10px;
@@ -354,7 +361,7 @@
     margin-top: 5px;
     padding: 5px;
 }
-div table td.jsvee-gutter {
+div.jsvee-animation table.jsvee-code-table td.jsvee-gutter {
     text-align: right;
     background-color: #D4E7F7;
     color: #4187C8;
@@ -364,6 +371,7 @@ div table td.jsvee-gutter {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    border: none;
 }
 .jsvee-gutter-selectable.jsvee-gutter:hover {
     color: #CD7D19;
@@ -375,7 +383,7 @@ div table td.jsvee-gutter {
 .jsvee-gutter-red {
     background-color: #FFB4B4;
 }
-div table td.jsvee-code-line {
+div.jsvee-animation table.jsvee-code-table td.jsvee-code-line {
     font-family: Inconsolata, Monaco, Consolas, "Andale Mono", "Courier New", monospace;
     font-size: 12px;
     white-space: pre;
@@ -384,8 +392,8 @@ div table td.jsvee-code-line {
     padding-left: 5px;
     padding-top: 1px;
     padding-bottom: 1px;
-    /*line-height: 10px;*/
     cursor: text;
+    border: none;
 }
 .jsvee-code-line.jsvee-hidden {
     color: transparent;
@@ -583,7 +591,7 @@ div table td.jsvee-code-line {
     font-size: 9px;
     margin-bottom: 1px;
 }
-.jsvee-animation.jsvee-small .jsvee-code-line {
+div.jsvee-animation.jsvee-small table.jsvee-code-table td.jsvee-code-line.jsvee-code-line  {
     font-size: 11px;
 }
 .jsvee-animation.jsvee-small .jsvee-class {
