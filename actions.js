@@ -151,9 +151,9 @@
     this.area.find('.jsvee-code-area').attr('data-line', line);
     ready();
 
-    };
-    JSVEE.registerAction('setLineKeepEvalArea', JSVEE.handlers.actions.setLineKeepEvalArea);
-    JSVEE.handlers.explanations.setLineKeepEvalArea = JSVEE.messages.setLine;
+  };
+  JSVEE.registerAction('setLineKeepEvalArea', JSVEE.handlers.actions.setLineKeepEvalArea);
+  JSVEE.handlers.explanations.setLineKeepEvalArea = JSVEE.messages.setLine;
 
 
   /**
