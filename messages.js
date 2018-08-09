@@ -32,11 +32,11 @@
   // ********************************************
 
   JSVEE.messages.beginButton = function() {
-    return _('Move to begin');
+    return _('Back to start');
   };
 
   JSVEE.messages.prevButton = function() {
-    return _('Undo');
+    return _('Step backward');
   };
 
   JSVEE.messages.stepButton = function() {
@@ -44,7 +44,7 @@
   };
 
   JSVEE.messages.redoButton = function() {
-    return _('Redo');
+    return _('Step forward');
   };
 
   JSVEE.messages.consoleTitle = function() {
@@ -52,7 +52,7 @@
   };
 
   JSVEE.messages.stackTitle = function() {
-    return _('Stack, all the stack frames are stored here.');
+    return _('Call Stack: all the stack frames are stored here.');
   };
 
   JSVEE.messages.literals = function() {
@@ -60,19 +60,19 @@
   };
 
   JSVEE.messages.stack = function() {
-    return _('Stack');
+    return _('Call Stack');
   };
 
   JSVEE.messages.literalsTitle = function() {
-    return _('Values needed during the execution are stored here.');
+    return _('Literal values needed by the program are stored here.');
   };
 
   JSVEE.messages.stackFrameTitle = function() {
-    return _('Stack frame, memory area containing the data related to the currently running code.');
+    return _('Stack frame: a memory area that tracks the progress of the running code.');
   };
 
   JSVEE.messages.evaluationAreaTitle = function() {
-    return _('Evaluation area, expressions will be evaluated here');
+    return _('Evaluation area: expressions are evaluated here');
   };
 
   JSVEE.messages.stackFrame = function() {
@@ -124,7 +124,7 @@
   };
 
   JSVEE.messages.referenceTitle = function(id) {
-    return _('A reference to an object, which is in the memory at location {0}').format(id);
+    return _("A reference to an object, located in memory at {0}").format(id);
   };
 
   JSVEE.messages.undo = function() {
@@ -146,19 +146,19 @@
   // ******************** ACTIONS ********************
 
   JSVEE.messages.setLine = function(line) {
-    return _('Moving to the line {0}').format(line);
+    return _('Moving to line {0}').format(line);
   };
 
   JSVEE.messages.jumpFalse = function(line) {
-    return _('Condition is false, moving to the line {0}').format(line);
+    return _('Condition is false, moving to line {0}').format(line);
   };
 
   JSVEE.messages.jumpTrue = function(line) {
-    return _('Condition is true, moving to the line {0}').format(line);
+    return _('Condition is true, moving to line {0}').format(line);
   };
 
   JSVEE.messages.jumpIterationReady = function(line) {
-    return _('Finished the iteration, moving to the line {0}').format(line);
+    return _('Finished the iteration, moving to line {0}').format(line);
   };
 
   JSVEE.messages.createVariable = function(name) {
@@ -191,7 +191,7 @@
 
   JSVEE.messages.addOperator = function(name) {
     if (name == 'int') {
-      return _('Fetching the type cast operator {0}').format(name);
+      return _('Fetching the type-cast operator {0}').format(name);
     } else {
       return _('Fetching the operator {0}').format(name);
     }
@@ -200,7 +200,7 @@
 
   JSVEE.messages.evaluateOperator = function(name) {
     if (name == 'int') {
-      return _('Evaluating the type cast operator {0}').format(name);
+      return _('Evaluating the type-cast operator {0}').format(name);
     } else {
       return _('Evaluating the operator {0}').format(name);
     }
@@ -236,7 +236,7 @@
   };
 
   JSVEE.messages.evaluateFunction = function(name) {
-    return _('Starting evaluation of the function {0}').format(name);
+    return _('Starting to evaluate the function {0}').format(name);
   };
 
   JSVEE.messages.evaluateBuiltInMethod = function(name) {
@@ -244,11 +244,11 @@
   };
 
   JSVEE.messages.evaluateMethod = function(name) {
-    return _('Starting evaluation of the method {0}').format(name);
+    return _('Starting to evaluate the method {0}').format(name);
   };
 
   JSVEE.messages.returnValue = function() {
-    return _('Returning the return value');
+    return _('Returning the value');
   };
 
   JSVEE.messages.returnVoid = function() {
@@ -256,7 +256,7 @@
   };
 
   JSVEE.messages.addReference = function(id) {
-    return _('Fetching a reference to an object, which is in the memory at location {0}').format(id);
+    return _('Fetching a reference to an object, located in memory at {0}').format(id);
   };
 
   JSVEE.messages.createInstance = function(className) {
@@ -292,7 +292,7 @@
   };
 
   JSVEE.messages.addCollectionInitializer = function() {
-    return _('Starting the initialization of the collection');
+    return _('Starting to initialize the collection');
   };
 
   JSVEE.messages.initializeCollection = function() {
@@ -300,7 +300,7 @@
   };
 
   JSVEE.messages.takeNext = function() {
-    return _('Fetching the next value of the collection');
+    return _('Fetching the next value from the collection');
   };
 
   JSVEE.messages.createFunction = function(name) {

@@ -23,11 +23,11 @@ msgid " on line "
 msgstr " rivillä "
 
 #: scala.js:923 scala.js:938
-msgid ", execution ongoing, on line "
+msgid ", executing line "
 msgstr ", suoritus käynnissä, rivillä "
 
 #: scala.js:394 scala.js:452
-msgid "-operator"
+msgid " operator"
 msgstr "-operaattori"
 
 #: scala.js:887
@@ -35,31 +35,31 @@ msgid "Addition operator"
 msgstr "Yhteenlaskuoperaattori"
 
 #: scala.js:901
-msgid "Array apply operator"
+msgid "Array-read operator"
 msgstr "Taulukostapoimimisoperaattori"
 
 #: scala.js:903
-msgid "Array assignment operator"
+msgid "Array-update operator"
 msgstr "Taulukkoonsijoitusoperaattori"
 
 #: scala.js:905
-msgid "Buffer append operator"
+msgid "Buffer-append operator"
 msgstr "Puskuriinlisäysoperaattori"
 
 #: scala.js:897
-msgid "Buffer apply operator"
+msgid "Buffer-read operator"
 msgstr "Puskuristapoimimisoperaattori"
 
 #: scala.js:899
-msgid "Buffer assignment operator"
+msgid "Buffer-update operator"
 msgstr "Puskuriinsijoitusoperaattori"
 
 #: scala.js:849
-msgid "Buffer, located in the memory at "
+msgid "Buffer in memory location "
 msgstr "Puskuri, joka on muistissa kohdassa "
 
 #: scala.js:865
-msgid "Command to create {0}"
+msgid "{0}-creating command"
 msgstr "{0}-luomiskäsky"
 
 #: scala.js:874 scala.js:876 scala.js:878 scala.js:880
@@ -75,7 +75,7 @@ msgid "Creating function literal"
 msgstr "Luodaan funktioliteraali"
 
 #: scala.js:857
-msgid "Definition of class constructor for {0}"
+msgid "Constructor definition for {0}"
 msgstr "{0}-luokan konstruktorin määrittely"
 
 #: scala.js:836
@@ -103,7 +103,7 @@ msgid "Evaluating "
 msgstr "Suoritetaan "
 
 #: scala.js:565
-msgid "Evaluating class constructor for {0}"
+msgid "Evaluating the constructor of class {0}"
 msgstr "Suoritetaan {0}-luokan konstruktori"
 
 #: scala.js:555
@@ -127,7 +127,7 @@ msgid "Fetching "
 msgstr "Noudetaan "
 
 #: scala.js:524
-msgid "Fetching class constructor for {0}"
+msgid "Fetching the constructor of class {0}"
 msgstr "Noudetaan {0}-luokan konstruktori"
 
 #: scala.js:509
@@ -155,11 +155,11 @@ msgid "Fetching method "
 msgstr "Noudetaan metodi "
 
 #: scala.js:440
-msgid "Fetching reference to data, located in memory at {0}"
+msgid "Fetching reference to data at memory location {0}"
 msgstr "Noudetaan viittaus tietoon, joka on muistissa kohdassa {0}"
 
 #: scala.js:443
-msgid "Fetching reference to object, located in memory at {0}"
+msgid "Fetching reference to an object at memory location {0}"
 msgstr "Noudetaan viittaus olioon, joka on muistissa kohdassa {0}"
 
 #: scala.js:18
@@ -171,8 +171,8 @@ msgid "Frame"
 msgstr "Kehys"
 
 #: scala.js:927
-msgid "Frame, execution unfinished"
-msgstr "Kehys, suoritus kesken"
+msgid "Frame; execution suspended"
+msgstr "Kehys; suoritus kesken"
 
 #: scala.js:884
 msgid "Inequality operator"
@@ -187,27 +187,27 @@ msgid "Package object "
 msgstr "Pakkausolio "
 
 #: scala.js:588
-msgid "Starting evaluation of class constructor for {0}"
+msgid "Starting to execute constructor of class {0}"
 msgstr "Aloitetaan {0}-luokan konstruktorin suoritus"
 
 #: scala.js:586
-msgid "Starting evaluation of command to create {0}"
+msgid "Starting to execute command to create {0}"
 msgstr "Aloitetaan {0}-luomiskäskyn suoritus"
 
 #: scala.js:601
-msgid "Starting evaluation of function"
+msgid "Starting to execute function"
 msgstr "Aloitetaan funktion suoritus"
 
 #: scala.js:592 scala.js:597
-msgid "Starting evaluation of function {0}"
+msgid "Starting to execute function {0}"
 msgstr "Aloitetaan funktion {0} suoritus"
 
 #: scala.js:594
-msgid "Starting evaluation of method {0}"
+msgid "Starting to execute method {0}"
 msgstr "Aloitetaan metodin {0} suoritus"
 
 #: scala.js:844
-msgid "String, located in the memory at "
+msgid "String at memory location "
 msgstr "Merkkijono, joka on muistissa kohdassa "
 
 #: scala.js:889
@@ -219,43 +219,39 @@ msgid "Trait "
 msgstr "Piirreluokka "
 
 #: scala.js:773
-msgid "Unevalued parameter"
+msgid "Unevaluated parameter"
 msgstr "Evaluoimaton parametriarvo"
 
 #: scala.js:368
-msgid "Unit, empty return value"
-msgstr "Unit, tyhjä palautusarvo"
+msgid "Unit: empty return value"
+msgstr "Unit: tyhjä palautusarvo"
 
 #: scala.js:907
-msgid "Vector apply operator"
+msgid "Vector-read operator"
 msgstr "Vektoristapoimimisoperaattori"
-
-#: scala.js:909
-msgid "Vector assignment operator"
-msgstr "Vektoriinsijoitusoperaattori"
 
 #: scala.js:410 scala.js:468
 msgid "addition operator"
 msgstr "yhteenlaskuoperaattori"
 
 #: scala.js:426 scala.js:484
-msgid "array apply operator"
+msgid "array-read operator"
 msgstr "taulukostapoimimisoperaattori"
 
 #: scala.js:428 scala.js:486
-msgid "array assignment operator"
+msgid "array-update operator"
 msgstr "taulukkoonsijoitusoperaattori"
 
 #: scala.js:424 scala.js:482
-msgid "buffer append operator"
+msgid "buffer-append operator"
 msgstr "puskuriinlisäysoperaattori"
 
 #: scala.js:420 scala.js:478
-msgid "buffer apply operator"
+msgid "buffer-read operator"
 msgstr "puskuristapoimimisoperaattori"
 
 #: scala.js:422 scala.js:480
-msgid "buffer assignment operator"
+msgid "buffer-update operator"
 msgstr "puskuriinsijoitusoperaattori"
 
 #: scala.js:397 scala.js:399 scala.js:401 scala.js:403 scala.js:455
@@ -268,11 +264,11 @@ msgid "concatenation operator"
 msgstr "yhdistämisoperaattori"
 
 #: scala.js:840
-msgid "definition of buffer creation command"
+msgid "definition of buffer-creating command"
 msgstr "Puskurin luomiskäskyn määrittely"
 
 #: scala.js:839
-msgid "definition of println subroutine"
+msgid "definition of the println subprogram"
 msgstr "println-aliohjelman määrittely"
 
 #: scala.js:416 scala.js:474
@@ -284,7 +280,7 @@ msgid "equality operator"
 msgstr "yhtäsuuruusoperaattori"
 
 #: scala.js:949 scala.js:952
-msgid "execution unfinished"
+msgid "execution suspended"
 msgstr "suoritus kesken"
 
 #: scala.js:407 scala.js:465
@@ -300,13 +296,9 @@ msgid "subtraction operator"
 msgstr "vähennyslaskuoperaattori"
 
 #: scala.js:932 scala.js:946
-msgid "unnamed function"
+msgid "anonymous function"
 msgstr "nimetön funktio"
 
 #: scala.js:430 scala.js:488
-msgid "vector apply operator"
+msgid "vector-read operator"
 msgstr "vektoristapoimimisoperaattori"
-
-#: scala.js:432 scala.js:490
-msgid "vector assignment operator"
-msgstr "vektoriinsijoitusoperaattori"
