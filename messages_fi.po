@@ -1,0 +1,299 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-08-09 13:08+0300\n"
+"PO-Revision-Date: 2018-08-09 13:37+0300\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: messages.js:115
+msgid " - failed!"
+msgstr " - epäonnistui!"
+
+#: messages.js:111
+msgid " - ready."
+msgstr "- valmis."
+
+#: messages.js:127
+msgid "A reference to an object, which is in the memory at location {0}"
+msgstr "Viittaus olioon, joka on muistissa kohdassa {0}"
+
+#: messages.js:231
+msgid "Assigning parameter values to the parameter variables"
+msgstr "Sijoitetaan parametrien arvo parametrimuuttujiin"
+
+#: messages.js:291
+msgid "Assigning value to the dictionary"
+msgstr "Sijoitetaan arvo hakemistoon"
+
+#: messages.js:177
+msgid "Assigning value to the instance variable {0}"
+msgstr "Sijoitetaan arvo ilmentymämuuttujaan {0}"
+
+#: messages.js:287
+msgid "Assigning value to the list"
+msgstr "Sijoitetaan arvo listaan"
+
+#: messages.js:227
+msgid "Assigning value to the parameter variable "
+msgstr "Sijoitetaan arvo parametrimuuttujaan "
+
+#: messages.js:173
+msgid "Assigning value to the variable {0}"
+msgstr "Sijoitetaan arvo muuttujaan {0}"
+
+#: messages.js:181
+msgid "Assigning values to the instance variables"
+msgstr "Sijoitetaan arvot ilmentymämuuttujiin"
+
+#: messages.js:107
+msgid "Class {0}"
+msgstr "Luokka {0}"
+
+#: messages.js:153
+msgid "Condition is false, moving to the line {0}"
+msgstr "Ehto on epätosi, siirrytään riville {0}"
+
+#: messages.js:157
+msgid "Condition is true, moving to the line {0}"
+msgstr "Ehto on tosi, siirrytään riville {0}"
+
+#: messages.js:264
+msgid "Creating a new dictionary"
+msgstr "Luodaan uusi hakemisto"
+
+#: messages.js:271
+msgid "Creating a new instance variable {0}"
+msgstr "Luodaan uusi ilmentymämuuttuja {0}"
+
+#: messages.js:266
+msgid "Creating a new list"
+msgstr "Luodaan uusi lista"
+
+#: messages.js:165
+msgid "Creating a new variable {0}"
+msgstr "Luodaan uusi muuttuja {0}"
+
+#: messages.js:275
+msgid "Creating a new {0} array"
+msgstr "Luodaan uusi {0}-taulukko"
+
+#: messages.js:268
+msgid "Creating a new {0} object"
+msgstr "Luodaan uusi {0}-olio"
+
+#: messages.js:223
+msgid "Creating the instance variables"
+msgstr "Luodaan ilmentymämuuttujat"
+
+#: messages.js:219
+msgid "Creating the parameter variables"
+msgstr "Luodaan parametrimuuttujat"
+
+#: messages.js:307
+msgid "Defining function {0}"
+msgstr "Määritellään funktio {0}"
+
+#: messages.js:143
+msgid "End of the animation."
+msgstr "Saavuttiin animaation loppuun."
+
+#: messages.js:255
+msgid "Ending the call"
+msgstr "Päätetään kutsu"
+
+#: messages.js:235
+msgid "Evaluating the built-in function {0}"
+msgstr "Suoritetaan sisäänrakennettu funktio {0}."
+
+#: messages.js:243
+msgid "Evaluating the built-in method {0}"
+msgstr "Suoritetaan sisäänrakennettu metodi {0}"
+
+#: messages.js:205
+msgid "Evaluating the operator {0}"
+msgstr "Suoritetaan operaattori {0}"
+
+#: messages.js:203
+msgid "Evaluating the type cast operator {0}"
+msgstr "Suoritetaan operaattori {0}"
+
+#: messages.js:83
+msgid "Evaluation area"
+msgstr "Evaluointialue"
+
+#: messages.js:75
+msgid "Evaluation area, expressions will be evaluated here"
+msgstr "Evaluointialue, lausekkeet evaluoidaan täällä"
+
+#: messages.js:259
+msgid ""
+"Fetching a reference to an object, which is in the memory at location {0}"
+msgstr "Noudetaan viittaus olioon, joka on muistissa kohdassa {0}"
+
+#: messages.js:211
+msgid "Fetching the function {0}"
+msgstr "Noudetaan funktio {0}"
+
+#: messages.js:215
+msgid "Fetching the method {0}"
+msgstr "Noudetaan metodi {0}"
+
+#: messages.js:303
+msgid "Fetching the next value of the collection"
+msgstr "Noudetaan kokoelman seuraava alkio"
+
+#: messages.js:196
+msgid "Fetching the operator {0}"
+msgstr "Noudetaan operaattori {0}"
+
+#: messages.js:194
+msgid "Fetching the type cast operator {0}"
+msgstr "Noudetaan operaattori {0}"
+
+#: messages.js:283
+msgid "Fetching value by the key"
+msgstr "Noudetaan arvo avaimella"
+
+#: messages.js:189
+msgid "Fetching value from the instance variable {0}"
+msgstr "Noudetaan arvo ilmentymämuuttujasta {0}"
+
+#: messages.js:279
+msgid "Fetching value from the list"
+msgstr "Noudetaan arvo listasta"
+
+#: messages.js:185
+msgid "Fetching value from the variable {0}"
+msgstr "Noudetaan arvo muuttujasta {0}"
+
+#: messages.js:169
+msgid "Fetching value {0}"
+msgstr "Noudetaan arvo {0}"
+
+#: messages.js:161
+msgid "Finished the iteration, moving to the line {0}"
+msgstr "Läpikäynti on valmis, siirrytään riville {0}"
+
+#: messages.js:99
+msgid "Function {0}"
+msgstr "Funktio {0}"
+
+#: messages.js:299
+msgid "Initializing the collection"
+msgstr "Alustetaan kokoelma"
+
+#: messages.js:59
+msgid "Literals"
+msgstr "Literaalit"
+
+#: messages.js:103
+msgid "Method {0}"
+msgstr "Metodi {0}"
+
+#: messages.js:35
+msgid "Move to begin"
+msgstr "Siirry alkuun"
+
+#: messages.js:131
+msgid "Moved one step backwards."
+msgstr "Siirryttiin askel taaksepäin."
+
+#: messages.js:139
+msgid "Moved one step forward."
+msgstr "Siirryttiin eteenpäin."
+
+#: messages.js:149
+msgid "Moving to the line {0}"
+msgstr "Siirrytään riville {0}"
+
+#: messages.js:95
+msgid "Operator {0}"
+msgstr "Operaattori {0}"
+
+#: messages.js:47
+msgid "Redo"
+msgstr "Siirry eteenpäin"
+
+#: messages.js:251
+msgid "Returning the return value"
+msgstr "Palautetaan paluuarvo"
+
+#: messages.js:135
+msgid "Rewound back to the start."
+msgstr "Siirryttiin takaisin alkuun"
+
+#: messages.js:63
+msgid "Stack"
+msgstr "Pino"
+
+#: messages.js:79
+msgid "Stack frame"
+msgstr "Kehys"
+
+#: messages.js:71
+msgid ""
+"Stack frame, memory area containing the data related to the currently "
+"running code."
+msgstr ""
+"Kehys, muistialue, jossa on tallessa suoritukseen liittyviä tietoja."
+
+#: messages.js:55
+msgid "Stack, all the stack frames are stored here."
+msgstr "Pino, kaikki kehykset on talletettu tänne."
+
+#: messages.js:239
+msgid "Starting evaluation of the function {0}"
+msgstr "Aloitetaan funktion {0} suoritus"
+
+#: messages.js:247
+msgid "Starting evaluation of the method {0}"
+msgstr "Aloitetaan metodin {0} suoritus"
+
+#: messages.js:295
+msgid "Starting the initialization of the collection"
+msgstr "Aloitetaan kokoelman alustaminen"
+
+#: messages.js:43
+msgid "Step forward"
+msgstr "Siirry eteenpäin"
+
+#: messages.js:51
+msgid "Text console"
+msgstr "Tekstikonsoli"
+
+#: messages.js:39
+msgid "Undo"
+msgstr "Siirry taaksepäin"
+
+#: messages.js:87
+msgid "Value {0}"
+msgstr "Arvo {0}"
+
+#: messages.js:91
+msgid "Value {0} of type {1}"
+msgstr "{1}-tyyppinen arvo {0}"
+
+#: messages.js:67
+msgid "Values needed during the execution are stored here."
+msgstr "Suorituksen aikana tarvittavat literaaliarvot ovat täällä."
+
+#: messages.js:119
+msgid "Variable {0}"
+msgstr "Muuttuja {0}"
+
+#: messages.js:123
+msgid "{0} object, in memory at location {1}"
+msgstr "{0}-olio, joka on muistissa kohdassa {1}"

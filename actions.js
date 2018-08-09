@@ -142,6 +142,20 @@
   JSVEE.registerAction('jumpIterationReady', JSVEE.handlers.actions.setLine);
   JSVEE.handlers.explanations.jumpIterationReady = JSVEE.messages.jumpIterationReady;
 
+  //Same as setLine but keeps the information of the evaluation area.
+  JSVEE.handlers.actions.setLineKeepEvalArea = function (ready, line, position) {
+
+    var stackFrame = this.area.find('.jsvee-stack-frame').first();
+    stackFrame.attr('data-line', line);
+    JSVEE.utils.ui.highlightCurrentLine(this.area, line, position);
+    this.area.find('.jsvee-code-area').attr('data-line', line);
+    ready();
+
+  };
+  JSVEE.registerAction('setLineKeepEvalArea', JSVEE.handlers.actions.setLineKeepEvalArea);
+  JSVEE.handlers.explanations.setLineKeepEvalArea = JSVEE.messages.setLine;
+
+
   /**
    * Updates the line highlight. This can be used if only a part of the line is
    * highlighted and this part must be changed. Position should be in form
