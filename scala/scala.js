@@ -366,7 +366,7 @@
   var createUnit = function () {
     var val = $('<div>Unit</div>').addClass('jsvee-value');
     val.attr('data-type', 'Unit').attr('data-value', 'Unit');
-    val.attr('title', _("Unit, empty return value"));
+    val.attr('title', _("Unit: empty return value"));
     return val;
   };
 
@@ -392,7 +392,7 @@
       type = JSVEE.utils.ui.findElement(this.area, position, true).data('type');
     }
 
-    var name = op + _("-operator");
+    var name = op + _(" operator");
 
     if (op == '<')
       name = _("comparison operator");
@@ -418,19 +418,17 @@
     } else if (type == 'String' && op == "+")
       name = _("concatenation operator");
     else if (type == 'ArrayBuffer' && op == "( )")
-      name = _("buffer apply operator");
+      name = _("buffer-read operator");
     else if (type == 'ArrayBuffer' && op == "( ) =")
-      name = _("buffer assignment operator");
+      name = _("buffer-update operator");
     else if (type == 'ArrayBuffer' && op == "+=")
-      name = _("buffer append operator");
+      name = _("buffer-append operator");
     else if (type == 'Array' && op == "( )")
-      name = _("array apply operator");
+      name = _("array-read operator");
     else if (type == 'Array' && op == "( ) =")
-      name = _("array assignment operator");
+      name = _("array-update operator");
     else if (type == 'Vector' && op == "( )")
-      name = _("vector apply operator");
-    else if (type == 'Vector' && op == "( ) =")
-      name = _("vector assignment operator");
+      name = _("vector-read operator");
 
     return _("Fetching ") + name;
 
@@ -438,10 +436,10 @@
 
   JSVEE.handlers.explanations.addReference = function (id) {
     if (this.settings['noIcons']) {
-      return _("Fetching reference to data, located in memory at {0}").format(id);
+      return _("Fetching reference to data at memory location {0}").format(id);
     } else {
       var realId = JSVEE.utils.ui.findReference(this.area, id).attr('data-id');
-      return _("Fetching reference to object, located in memory at {0}").format(realId);
+      return _("Fetching reference to an object at memory location {0}").format(realId);
     }
   };
 
@@ -450,7 +448,7 @@
     var elem = JSVEE.utils.ui.findElement(this.area, position);
     var op = elem.data('name');
     var type = elem.data('class');
-    var name = op + _("-operator");
+    var name = op + _(" operator");
 
     if (op == '<')
       name = _("comparison operator");
@@ -476,20 +474,17 @@
     } else if (type == 'String' && op == "+")
       name = _("concatenation operator");
     else if (type == 'ArrayBuffer' && op == "( )")
-      name = _("buffer apply operator");
+      name = _("buffer-read operator");
     else if (type == 'ArrayBuffer' && op == "( ) =")
-      name = _("buffer assignment operator");
+      name = _("buffer-update operator");
     else if (type == 'ArrayBuffer' && op == "+=")
-      name = _("buffer append operator");
+      name = _("buffer-append operator");
     else if (type == 'Array' && op == "( )")
-      name = _("array apply operator");
+      name = _("array-read operator");
     else if (type == 'Array' && op == "( ) =")
-      name = _("array assignment operator");
+      name = _("array-update operator");
     else if (type == 'Vector' && op == "( )")
-      name = _("vector apply operator");
-    else if (type == 'Vector' && op == "( ) =")
-      name = _("vector assignment operator");
-
+      name = _("vector-read operator");
 
     return _("Evaluating ") + name;
   };
@@ -522,7 +517,7 @@
               || name == "Some") {
             return _("Fetching command to create {0}").format(name);
           } else if (name == className) {
-            return _("Fetching class constructor for {0}").format(name);
+            return _("Fetching the constructor of class {0}").format(name);
           } else if (this.area.find(
             '.jsvee-classes .jsvee-class[data-name="' + className + '"] .jsvee-function[data-name="' + name + '"]')
               .attr('data-static') === "true") {
@@ -563,7 +558,7 @@
               || name == "Some") {
             return _("Evaluating command to create {0}").format(name);
           } else if (name == className) {
-            return _("Evaluating class constructor for {0}").format(name);
+            return _("Evaluating the constructor of class {0}").format(name);
           } else if (this.area.find(
             '.jsvee-classes .jsvee-class[data-name="' + className + '"] .jsvee-function[data-name="' + name + '"]')
               .attr('data-static') === "true") {
@@ -584,22 +579,22 @@
         if (className !== undefined) {
           if (name == className
               && this.area.find('.jsvee-class.jsvee-instance .jsvee-function[data-name="' + name + '"]').length > 0) {
-            return _("Starting evaluation of command to create {0}").format(name);
+            return _("Starting to execute command to create {0}").format(name);
           } else if (name == className) {
-            return _("Starting evaluation of class constructor for {0}").format(name);
+            return _("Starting to execute constructor of class {0}").format(name);
           } else if (this.area.find(
             '.jsvee-classes .jsvee-class[data-name="' + className + '"] .jsvee-function[data-name="' + name + '"]')
               .attr('data-static') === "true") {
-            return _("Starting evaluation of function {0}").format(name);
+            return _("Starting to execute function {0}").format(name);
           } else {
-            return _("Starting evaluation of method {0}").format(name);
+            return _("Starting to execute method {0}").format(name);
           }
         } else {
-          return _("Starting evaluation of function {0}").format(name);
+          return _("Starting to execute function {0}").format(name);
         }
 
       } else {
-        return _("Starting evaluation of function");
+        return _("Starting to execute function");
       }
     }
   };
@@ -771,7 +766,7 @@
    */
   JSVEE.handlers.actions.createCodeValue = function (ready, value, type, functionName, paramCount, pc) {
     var val = JSVEE.utils.ui.findOrCreateValue(this.area, value, type);
-    val.attr('title', _("Unevalued parameter"));
+    val.attr('title', _("Unevaluated parameter"));
     if (functionName) {
       val.attr('data-name', functionName);
       val.attr('data-params', paramCount);
@@ -837,17 +832,17 @@
         elem.attr('title', _("Definition of function {0}").format(elem.data('name')));
       });
 
-      this.area.find('.jsvee-function[data-name="println"]').attr('title', _("definition of println subroutine"));
-      this.area.find('.jsvee-function[data-name="Buffer"]').attr('title', _("definition of buffer creation command"));
+      this.area.find('.jsvee-function[data-name="println"]').attr('title', _("definition of the println subprogram"));
+      this.area.find('.jsvee-function[data-name="Buffer"]').attr('title', _("definition of buffer-creating command"));
 
       this.area.find('.jsvee-instance[data-type="String"]').each(function () {
         var elem = $(this);
-        elem.attr('title', _("String, located in the memory at ") + elem.data('id'));
+        elem.attr('title', _("String at memory location ") + elem.data('id'));
       });
 
       this.area.find('.jsvee-instance[data-type="ArrayBuffer"]').each(function () {
         var elem = $(this);
-        elem.attr('title', _("Buffer, located in the memory at ") + elem.data('id'));
+        elem.attr('title', _("Buffer in memory location ") + elem.data('id'));
       });
 
     } else {
@@ -855,7 +850,7 @@
       this.area.find('.jsvee-class .jsvee-function').each(function () {
         var elem = $(this);
         if (elem.data('name') == elem.data('class'))
-          elem.attr('title', _("Definition of class constructor for {0}").format(elem.data('name')));
+          elem.attr('title', _("Constructor definition for {0}").format(elem.data('name')));
         else
           elem.attr('title', _("Definition of method {0}").format(elem.data('name')));
       });
@@ -863,7 +858,7 @@
       this.area.find('.jsvee-class.jsvee-instance .jsvee-function').each(function () {
         var elem = $(this);
         if (elem.data('name') == elem.data('class'))
-          elem.attr('title', _("Command to create {0}").format(elem.data('name')));
+          elem.attr('title', _("{0}-creating command").format(elem.data('name')));
       });
 
     }
@@ -895,19 +890,17 @@
       } else if (elem.data('class') == 'String' && elem.data('name') == "+")
         elem.attr('title', _("Concatenation operator"));
       else if (elem.data('class') == 'ArrayBuffer' && elem.data('name') == "( )")
-        elem.attr('title', _("Buffer apply operator"));
+        elem.attr('title', _("Buffer-read operator"));
       else if (elem.data('class') == 'ArrayBuffer' && elem.data('name') == "( ) =")
-        elem.attr('title', _("Buffer assignment operator"));
+        elem.attr('title', _("Buffer-update operator"));
       else if (elem.data('class') == 'Array' && elem.data('name') == "( )")
-        elem.attr('title', _("Array apply operator"));
+        elem.attr('title', _("Array-read operator"));
       else if (elem.data('class') == 'Array' && elem.data('name') == "( ) =")
-        elem.attr('title', _("Array assignment operator"));
+        elem.attr('title', _("Array-update operator"));
       else if (elem.data('class') == 'ArrayBuffer' && elem.data('name') == "+=")
-        elem.attr('title', _("Buffer append operator"));
+        elem.attr('title', _("Buffer-append operator"));
       else if (elem.data('class') == 'Vector' && elem.data('name') == "( )")
-        elem.attr('title', _("Vector apply operator"));
-      else if (elem.data('class') == 'Vector' && elem.data('name') == "( ) =")
-        elem.attr('title', _("Vector assignment operator"));
+        elem.attr('title', _("Vector-read operator"));
     });
 
     var frames = this.area.find('.jsvee-stack-frame');
@@ -921,22 +914,22 @@
         frame.find('.jsvee-area-label')
             .text(
               _("Frame")
-                  + (frame.attr('data-line') === undefined ? '' : _(", execution ongoing, on line ")
+                  + (frame.attr('data-line') === undefined ? '' : _(", executing line ")
                       + frame.attr('data-line')));
       } else if (index == frames.length - 1) {
         frame.find('.jsvee-area-label').text(
-          _("Frame, execution unfinished")
+          _("Frame; execution suspended")
               + (frame.attr('data-line') === undefined ? '' : _(" on line ") + frame.attr('data-line')));
       } else if (index == 0) {
         var func = frame.next('.jsvee-stack-frame').find('.jsvee-function.jsvee-active').first().attr('data-name');
         if (func === undefined)
-          func = _("unnamed function");
+          func = _("anonymous function");
         if (frame.attr('data-line') !== undefined) {
           frame.find('.jsvee-area-label').text(
             _("Frame") + ' ('
                 + func
                 + ')'
-                + (frame.attr('data-line') === undefined ? '' : _(", execution ongoing, on line ")
+                + (frame.attr('data-line') === undefined ? '' : _(", executing line ")
                     + frame.attr('data-line')));
         } else {
           frame.find('.jsvee-area-label').text(_("Frame") +  ' (' + func + ')');
@@ -944,13 +937,13 @@
       } else {
         var func = frame.next('.jsvee-stack-frame').find('.jsvee-function.jsvee-active').first().attr('data-name');
         if (func === undefined)
-          func = _("unnamed function");
+          func = _("anonymous function");
         if (frame.attr('data-line') !== undefined) {
           frame.find('.jsvee-area-label').text(
-            _("Frame") + ' (' + func + ')' + _("execution unfinished")
+            _("Frame") + ' (' + func + ') ' + _("execution suspended")
                 + (frame.attr('data-line') === undefined ? '' : _(" on line ") + frame.attr('data-line')));
         } else {
-          frame.find('.jsvee-area-label').text(_("Frame") +  ' (' + func + ')' + _("execution unfinished"));
+          frame.find('.jsvee-area-label').text(_("Frame") +  ' (' + func + ')' + _("execution suspended"));
         }
       }
 
