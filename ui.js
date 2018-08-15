@@ -16,7 +16,7 @@
   JSVEE.ui = function(id, area, settings) {
 
     this.animation = $.extend(true, {}, JSVEE.animations.getAnimation(id));
-    if (this.animation === null) {
+    if ($.isEmptyObject(this.animation)) {
       return;
     }
 
