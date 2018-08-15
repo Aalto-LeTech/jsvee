@@ -17,6 +17,7 @@
 
     this.animation = $.extend(true, {}, JSVEE.animations.getAnimation(id));
     if ($.isEmptyObject(this.animation)) {
+      console.log("JSVEE warning: animation '" + id + "' was not found!");
       return;
     }
 
