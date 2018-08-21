@@ -542,7 +542,7 @@
     }
 
     if (type) {
-      newOp.attr('data-type') == type;
+      newOp.attr('data-type') = type;
     }
 
     ready(newOp);
@@ -1423,7 +1423,7 @@
       collectionId = variable.find('.jsvee-value').attr('data-id');
     }
 
-    var iterator = JSVEE.utils.ui.createIterator(this.area, name, collectionId, from, to, type);
+    var iterator = JSVEE.utils.ui.createIterator(name, collectionId, from, to, type);
     iterator.appendTo(frame);
     ready(iterator);
 

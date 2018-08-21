@@ -864,6 +864,7 @@
   JSVEE.utils.ui.convertFunctionToCallable = function(element) {
 
     element.attr('title', '');
+    element.addClass('jsvee-function');
 
     if (!element.children().first().hasClass('jsvee-ref')) {
       element.text('');
