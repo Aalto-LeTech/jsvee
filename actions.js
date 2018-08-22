@@ -542,7 +542,7 @@
     }
 
     if (type) {
-      newOp.attr('data-type') = type;
+      newOp.attr('data-type', type);
     }
 
     ready(newOp);
