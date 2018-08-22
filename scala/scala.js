@@ -120,10 +120,10 @@
 
     } else if (element.hasClass("jsvee-function") && element.data('name') === 'head') {
       var value = element.find('.jsvee-value').first().data('value');
-      ready(JSVEE.utils.ui.findOrCreateValue(this.area, value.substring(0, 1), "String"));
+      ready(JSVEE.utils.ui.findOrCreateValue(this.area, value.substring(0, 1), "Char"));
     } else if (element.hasClass("jsvee-function") && element.data('name') === 'last') {
       var value = element.find('.jsvee-value').first().data('value');
-      ready(JSVEE.utils.ui.findOrCreateValue(this.area, value.substr(value.length - 1), "String"));
+      ready(JSVEE.utils.ui.findOrCreateValue(this.area, value.substr(value.length - 1), "Char"));
     } else if (element.hasClass("jsvee-function") && element.data('name') === 'length') {
       var value = element.find('.jsvee-value').first().data('value');
       ready(JSVEE.utils.ui.findOrCreateValue(this.area, value.length, "Int"));
@@ -139,6 +139,15 @@
         "Boolean"));
     }
 
+  };
+
+  JSVEE.handlers.classes['Char'] = function (ready, area, element) {
+    if (element.hasClass("jsvee-operator") && element.data('name') === '!=') {
+      var prev = element.prev();
+      var next = element.next();
+      ready(JSVEE.utils.ui.findOrCreateValue(this.area, (prev.data('value') != next.data('value')).toString(),
+        "Boolean"));
+    }
   };
 
   JSVEE.handlers.classes['Predef'] = function (ready, area, element) {
