@@ -65,7 +65,7 @@
       if (nextType === "String" || nextType === "Char")
         nval = '"' + nval + '"';
 
-      var result = eval(pval + op + nval);
+      var result = eval(pval + " " + op + " " + nval);
 
       if (typeof result === "boolean")
         resultType = "Boolean";
