@@ -120,8 +120,12 @@
       console.attr('data-title', JSVEE.messages.consoleTitle());
       console.appendTo(memoryArea);
 
+      if (this.settings.consoleHeight) {
+        console.css('min-height', this.settings.consoleHeight + 'px')
+      }
+
       var heap = this.area.find('.jsvee-heap');
-      
+
       if (this.settings.consoleBelowHeap === true) {
         heap.css('position', 'relative');
         console.css('position', 'absolute');
