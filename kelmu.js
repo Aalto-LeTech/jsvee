@@ -65,6 +65,14 @@
                 'data-line'));
             }
           });
+
+          var name = self.area.attr('data-kelmu-id') || self.area.attr('data-id');
+            if (window.kelmu && window.kelmu.data[name]) {
+              setTimeout(function() {
+                window.kelmu.initAnnotations(self.area, name);
+              }, 200);
+          }
+
       });
 
       JSVEE.afterEachStep(true, function(instr) {
