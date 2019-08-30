@@ -8,6 +8,12 @@
       return;
     }
 
+    const _ = typeof(window._) === "function" ?
+      window._ :
+      function(msg) {
+      return msg;
+    };
+
     var runToLineActive = false;
 
     var annotations = window.kelmu;
@@ -17,18 +23,18 @@
         annotations.registerCallback(self.animationId,
           function(action, parameter) {
             if (action === 'skip') {
-              JSVEE.utils.ui.setStatusText(self.area, 'Moving forward');
+              JSVEE.utils.ui.setStatusText(self.area, _('Moving forward'));
               self.state.stepsToRun = +parameter;
               self.state.animationsDisabled = true;
               self.state.reEnableAnimations = true;
             } else if (action === 'runToLine') {
-              JSVEE.utils.ui.setStatusText(self.area, 'Moving forward');
+              JSVEE.utils.ui.setStatusText(self.area, _('Moving forward'));
               self.state.runToLine = +parameter;
               self.state.reEnableAnimations = true;
               runToLineActive = true;
               self.makeStep();
             } else if (action === 'skipToLine') {
-              JSVEE.utils.ui.setStatusText(self.area, 'Moving forward');
+              JSVEE.utils.ui.setStatusText(self.area, _('Moving forward'));
               self.state.runToLine = +parameter;
               self.state.reEnableAnimations = true;
               self.state.animationsDisabled = true;
