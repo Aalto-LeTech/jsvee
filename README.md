@@ -185,6 +185,9 @@ Teemu Sirkiä. 2014. [Exploring expression-level program visualization in CS1.](
 Teemu Sirkiä. 2016. [Jsvee & Kelmu: Creating and tailoring program animations for computing education.](https://doi.org/10.1109/VISSOFT.2016.24) 2016 IEEE Working
 Conference on Software Visualization (VISSOFT), 36–45
 
+Teemu Sirkiä. 2017. [Creating, Tailoring, and Distributing Program Animations - Supporting the Production Process of Interactive Learning Content](http://urn.fi/URN:ISBN:978-952-60-7544-0)
+PhD Thesis, Aalto University
+
 ## License
 
 Copyright Teemu Sirkiä and Aalto University, 2016.
