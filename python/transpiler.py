@@ -168,24 +168,30 @@ def handleBoolOp(node, line, result):
     ops = {'And' : 'and', 'Or' : 'or'}
     name = node.op.__class__.__name__
 
+    pos_elem = result.getPosition()
+
     traverseCode(node.values[0], line, result)
 
-    pos = result.getPosition()
-    result.steps.append(['addOperator', ops[name], pos])
-    result.addInitStep(['createOperator', ops[name], 'lr'])
+    pos_op = result.getPosition()
+    result.steps.append(['addOperator', ops[name], pos_op])
+    result.addInitStep(['createOperator', ops[name], 'l'])
 
     label1 = result.getNextLabel()
     label2 = result.getNextLabel()
-    result.steps.append(['evaluateOperator', pos])
-    result.steps.append(['_conditionalJump', '@' + label1, '@' + label2])
+    result.steps.append(['evaluateOperator', pos_op])
+
+    if ops[name] == 'and':
+        result.steps.append(['_conditionalJump', '@' + label1, '@' + label2])
+    else:
+        result.steps.append(['_conditionalJump', '@' + label2, '@' + label1])
 
     result.steps.append(['_label', label1])
-    result.steps.append(['removeElement_', label1])
+    result.steps.append(['removeElement_', pos_elem])
     result.moveLeft()
     traverseCode(node.values[1], line, result)
 
     result.steps.append(['_label', label2])
-
+	
 
 def handleBreak(node, line, result):
     assert len(result.breakStack) > 0

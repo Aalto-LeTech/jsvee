@@ -18,6 +18,15 @@
         return;
       }
 
+      if ((element.text() === 'or' || element.text() === 'and') && element.attr('data-type') === 'l') {
+        if (JSVEE.handlers.truthness(params[0])) {
+          ready(JSVEE.utils.ui.findOrCreateValue(area, 'True', 'bool'));
+        } else {
+          ready(JSVEE.utils.ui.findOrCreateValue(area, 'False', 'bool'));
+        }
+        return;
+      }
+	  
       if (element.attr('data-type') == 'r') {
         var result = eval(element.text() + params[0].text());
         ready(JSVEE.utils.ui.findOrCreateValue(area, result, params[0].attr('data-type')));
